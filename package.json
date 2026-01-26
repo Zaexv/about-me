@@ -1,0 +1,24 @@
+{
+  "name": "about-me",
+  "version": "1.0.0",
+  "description": "Personal portfolio with 3D shader background",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 8000 -o",
+    "serve": "npx http-server -p 8000",
+    "dev": "npx live-server --port=8000"
+  },
+  "keywords": [
+    "portfolio",
+    "threejs",
+    "shader",
+    "3d"
+  ],
+  "author": "Eduardo Pertierra Puche",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
+  }
+}
+
