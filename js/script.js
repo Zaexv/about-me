@@ -1,6 +1,5 @@
 // Custom cursor and Lighting effect
 const cursor = document.querySelector('.cursor');
-const mouseLight = document.querySelector('.mouse-light');
 
 document.addEventListener('mousemove', (e) => {
     const x = e.clientX;
@@ -68,4 +67,3 @@ document.querySelectorAll('section').forEach(section => {
     observer.observe(section);
 });
 
-console.log('Portfolio loaded ✨');

@@ -6,7 +6,11 @@
   "scripts": {
     "start": "npx http-server -p 8000 -o",
     "serve": "npx http-server -p 8000",
-    "dev": "npx live-server --port=8000"
+    "dev": "npx live-server --port=8000",
+    "lint": "eslint js/",
+    "lint:fix": "eslint js/ --fix",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run lint && npm run typecheck"
   },
   "keywords": [
     "portfolio",
@@ -17,8 +21,11 @@
   "author": "Eduardo Pertierra Puche",
   "license": "MIT",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.59.1",
+    "@typescript-eslint/parser": "^8.59.1",
+    "eslint": "^9.39.4",
     "http-server": "^14.1.1",
-    "live-server": "^1.2.2"
+    "live-server": "^1.2.2",
+    "typescript": "^6.0.3"
   }
 }
-

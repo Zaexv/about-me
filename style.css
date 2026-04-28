@@ -43,17 +43,6 @@ body {
   transition: transform 0.1s, border-color 0.3s, background 0.3s, scale 0.3s;
 }
 
-.cursor-follower {
-  width: 40px;
-  height: 40px;
-  border: 1px solid rgba(0, 255, 136, 0.3);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9998;
-  transition: all 0.3s ease;
-}
-
 /* Mouse Light Effect */
 .mouse-light {
   position: fixed;
@@ -67,10 +56,6 @@ body {
       rgba(0, 255, 136, 0.1) 0%,
       rgba(0, 255, 136, 0.05) 30%,
       transparent 80%);
-}
-
-.cursor-follower {
-  display: none;
 }
 
 /* Header */
@@ -182,10 +167,6 @@ body {
   transform-origin: top center;
 }
 
-.hero-content {
-  max-width: 1200px;
-}
-
 .hero-title {
   font-size: clamp(3rem, 10vw, 8rem);
   font-weight: 700;
@@ -197,7 +178,6 @@ body {
   display: block;
 }
 
-/* Simple Hero */
 .hero-title .line::after {
   content: '';
   display: block;
@@ -247,31 +227,6 @@ body {
   text-decoration: none;
 }
 
-.scroll-indicator {
-  position: absolute;
-  bottom: 4rem;
-  right: 4rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  color: var(--text-secondary);
-  font-size: 0.875rem;
-}
-
-@keyframes scrollLine {
-
-  0%,
-  100% {
-    transform: scaleY(0);
-    transform-origin: top;
-  }
-
-  50% {
-    transform: scaleY(1);
-  }
-}
-
 /* Sections */
 section {
   padding: 8rem 4rem;
@@ -285,10 +240,6 @@ section {
   position: relative;
   display: inline-block;
 }
-
-/* Removed title line */
-
-/* Removed skills-tree-section and previous container styles */
 
 #skills-tree-container circle {
   filter: drop-shadow(0 0 5px currentColor);
@@ -304,42 +255,6 @@ section {
   transition: opacity 0.3s ease;
 }
 
-.project:hover {
-  border-color: var(--accent);
-}
-
-.project-number {
-  font-size: 3rem;
-  font-weight: 700;
-  color: var(--text-secondary);
-}
-
-.project-content h3 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: var(--accent);
-}
-
-.project-content p {
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
-  font-size: 1.125rem;
-}
-
-.project-tech {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.project-tech span {
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: 2rem;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-}
-
 /* About Section */
 .about-content {
   display: grid;
@@ -351,12 +266,6 @@ section {
   font-size: 1.5rem;
   line-height: 1.8;
   color: var(--text-secondary);
-}
-
-.skills {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
 }
 
 /* Competencies */
@@ -608,8 +517,6 @@ section {
 }
 
 
-/* Removed Yo-yo styles */
-
 /* Footer */
 .footer {
 
@@ -655,16 +562,11 @@ section {
     gap: 1.5rem;
   }
 
-  .scroll-indicator {
-    display: none;
-  }
-
   body {
     cursor: auto;
   }
 
-  .cursor,
-  .cursor-follower {
+  .cursor {
     display: none;
   }
 }
