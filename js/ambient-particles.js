@@ -5,10 +5,10 @@
  */
 
 (function () {
-    const PARTICLE_COUNT = 80;
-    const MAX_SIZE = 3;
-    const MIN_SIZE = 0.5;
-    const DRIFT_SPEED = 0.3;
+    const PARTICLE_COUNT = 50;
+    const MAX_SIZE = 2.5;
+    const MIN_SIZE = 0.3;
+    const DRIFT_SPEED = 0.2;
     const COLORS = [
         'rgba(99, 102, 241,',   // indigo
         'rgba(129, 140, 248,',  // light indigo
@@ -52,7 +52,7 @@
                 size: Math.random() * (MAX_SIZE - MIN_SIZE) + MIN_SIZE,
                 speedX: (Math.random() - 0.5) * DRIFT_SPEED,
                 speedY: (Math.random() - 0.5) * DRIFT_SPEED - 0.1,
-                opacity: Math.random() * 0.5 + 0.1,
+                opacity: Math.random() * 0.35 + 0.05,
                 color: COLORS[Math.floor(Math.random() * COLORS.length)],
                 phase: Math.random() * Math.PI * 2,
                 twinkleSpeed: Math.random() * 0.02 + 0.005,
