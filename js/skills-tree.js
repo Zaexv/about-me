@@ -6,15 +6,15 @@
 
 (function () {
     const CONTAINER_ID = 'skills-tree-container';
-    const PARTICLE_COUNT = 200;
-    const CONNECTION_DISTANCE = 3.2;
-    const MOUSE_RADIUS = 4.0;
+    const PARTICLE_COUNT = 140;
+    const CONNECTION_DISTANCE = 2.6;
+    const MOUSE_RADIUS = 3.5;
     const COLORS = [
-        new THREE.Color(0xff4757), // accent red
-        new THREE.Color(0xe84393), // rose
-        new THREE.Color(0xff6348), // warm orange
-        new THREE.Color(0xff7979), // soft coral
-        new THREE.Color(0xffffff), // white accent
+        new THREE.Color(0x6366f1), // indigo
+        new THREE.Color(0x818cf8), // light indigo
+        new THREE.Color(0x38bdf8), // sky blue
+        new THREE.Color(0xa5b4fc), // soft lavender
+        new THREE.Color(0xf0f0f0), // near-white
     ];
 
     let scene, camera, renderer, particles, lines;
@@ -86,8 +86,8 @@
             velocities[i3 + 1] = (Math.random() - 0.5) * 0.002;
             velocities[i3 + 2] = (Math.random() - 0.5) * 0.002;
 
-            // Size variation — larger and more varied for visibility
-            sizes[i] = Math.random() * 0.8 + 0.25;
+            // Size variation — refined for clarity
+            sizes[i] = Math.random() * 0.5 + 0.15;
 
             // Color from palette
             const color = COLORS[Math.floor(Math.random() * COLORS.length)];
@@ -139,7 +139,7 @@
                     float core = 1.0 - smoothstep(0.0, 0.15, d);
 
                     vec3 finalColor = mix(vColor, vec3(1.0), core * 0.6);
-                    float alpha = strength * vAlpha * 1.0;
+                    float alpha = strength * vAlpha * 0.85;
                     gl_FragColor = vec4(finalColor, alpha);
                 }
             `,
@@ -165,7 +165,7 @@
 
         const lineMaterial = new THREE.LineBasicMaterial({
             transparent: true,
-            opacity: 0.3,
+            opacity: 0.18,
             vertexColors: true,
             blending: THREE.AdditiveBlending,
             depthWrite: false,

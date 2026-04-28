@@ -11,10 +11,10 @@
   --text: #f0f0f0;
   --text-secondary: #8a8a8a;
   --text-tertiary: #555;
-  --accent: #ff4757;
-  --accent-dim: rgba(255, 71, 87, 0.15);
-  --accent-warm: #ff6348;
-  --accent-rose: #e84393;
+  --accent: #6366f1;
+  --accent-dim: rgba(99, 102, 241, 0.15);
+  --accent-light: #818cf8;
+  --accent-sky: #38bdf8;
   --border: rgba(255, 255, 255, 0.06);
   --border-hover: rgba(255, 255, 255, 0.12);
   --glass: rgba(255, 255, 255, 0.03);
@@ -53,10 +53,10 @@ body {
   left: 0;
   height: 3px;
   width: 0%;
-  background: linear-gradient(90deg, var(--accent), var(--accent-rose), var(--accent-warm));
+  background: linear-gradient(90deg, var(--accent), var(--accent-sky), var(--accent-light));
   z-index: 9999;
   transition: width 0.1s linear;
-  box-shadow: 0 0 10px var(--accent), 0 0 20px rgba(255, 71, 87, 0.3);
+  box-shadow: 0 0 10px var(--accent), 0 0 20px rgba(99, 102, 241, 0.3);
 }
 
 /* Gradient mesh background */
@@ -89,7 +89,7 @@ body {
 .gradient-mesh .blob:nth-child(2) {
   width: 500px;
   height: 500px;
-  background: var(--accent-rose);
+  background: var(--accent-sky);
   bottom: 10%;
   left: -10%;
   animation-delay: -7s;
@@ -99,7 +99,7 @@ body {
 .gradient-mesh .blob:nth-child(3) {
   width: 450px;
   height: 450px;
-  background: var(--accent-warm);
+  background: var(--accent-light);
   top: 40%;
   right: 30%;
   animation-delay: -14s;
@@ -157,8 +157,8 @@ body {
   pointer-events: none;
   z-index: 1;
   background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      rgba(255, 71, 87, 0.06) 0%,
-      rgba(255, 71, 87, 0.02) 40%,
+      rgba(99, 102, 241, 0.06) 0%,
+      rgba(99, 102, 241, 0.02) 40%,
       transparent 70%);
 }
 
@@ -246,7 +246,7 @@ body {
   color: var(--accent) !important;
   padding: 0.5rem 1.25rem;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 71, 87, 0.2);
+  border: 1px solid rgba(99, 102, 241, 0.2);
   font-weight: 600 !important;
   transition: all var(--transition) !important;
 }
@@ -256,8 +256,8 @@ body {
 }
 
 .nav-cta:hover {
-  background: rgba(255, 71, 87, 0.25) !important;
-  border-color: rgba(255, 71, 87, 0.4);
+  background: rgba(99, 102, 241, 0.25) !important;
+  border-color: rgba(99, 102, 241, 0.4);
   transform: translateY(-1px);
 }
 
@@ -295,7 +295,7 @@ body {
   background: var(--accent-dim);
   padding: 0.4rem 1rem;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 71, 87, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.15);
   margin-bottom: 2rem;
   letter-spacing: 0.02em;
 }
@@ -309,8 +309,8 @@ body {
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.4); }
-  50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(255, 71, 87, 0); }
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(99, 102, 241, 0); }
 }
 
 .hero-right {
@@ -353,7 +353,7 @@ body {
 .hero-subtitle {
   font-size: 1.5rem;
   font-weight: 600;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-rose) 50%, var(--accent-warm) 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-sky) 50%, var(--accent-light) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -561,7 +561,7 @@ section {
 
 .exp-item:hover::before {
   background: var(--accent);
-  box-shadow: 0 0 12px rgba(255, 71, 87, 0.4);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
 }
 
 .exp-header {
@@ -592,7 +592,7 @@ section {
   padding: 0.25rem 0.75rem;
   background: var(--accent-dim);
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 71, 87, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.1);
   flex-shrink: 0;
 }
 
@@ -705,7 +705,7 @@ section {
 }
 
 .excellence {
-  color: var(--accent-warm);
+  color: var(--accent-light);
   font-style: italic;
 }
 
@@ -720,7 +720,7 @@ section {
   font-weight: 500;
   margin-top: 0.75rem;
   letter-spacing: 0.02em;
-  border: 1px solid rgba(255, 71, 87, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.1);
 }
 
 .certifications {
@@ -782,7 +782,7 @@ section {
 }
 
 .project-card:hover {
-  background: linear-gradient(135deg, var(--accent) 0%, transparent 50%, var(--accent-warm) 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, transparent 50%, var(--accent-light) 100%);
   transform: translateY(-4px);
 }
 
@@ -838,7 +838,7 @@ section {
 }
 
 .project-link:hover {
-  color: var(--accent-rose);
+  color: var(--accent-sky);
 }
 
 .project-link:hover .arrow {
@@ -895,7 +895,7 @@ section {
 
 .contact-link:hover {
   border-color: var(--accent);
-  background: rgba(255, 71, 87, 0.03);
+  background: rgba(99, 102, 241, 0.03);
   transform: translateX(4px);
 }
 

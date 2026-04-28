@@ -18,7 +18,7 @@ interactiveElements.forEach(el => {
     el.addEventListener('mouseenter', () => {
         cursor.style.scale = '2.5';
         cursor.style.borderColor = 'var(--accent)';
-        cursor.style.background = 'rgba(255, 71, 87, 0.1)';
+        cursor.style.background = 'rgba(99, 102, 241, 0.1)';
     });
 
     el.addEventListener('mouseleave', () => {

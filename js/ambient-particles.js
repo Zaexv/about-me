@@ -10,10 +10,10 @@
     const MIN_SIZE = 0.5;
     const DRIFT_SPEED = 0.3;
     const COLORS = [
-        'rgba(255, 71, 87,',   // accent red
-        'rgba(232, 67, 147,',  // rose
-        'rgba(255, 99, 72,',   // warm
-        'rgba(255, 255, 255,', // white sparkle
+        'rgba(99, 102, 241,',   // indigo
+        'rgba(129, 140, 248,',  // light indigo
+        'rgba(56, 189, 248,',   // sky blue
+        'rgba(255, 255, 255,',  // white sparkle
     ];
 
     let canvas, ctx, particles, width, height;
