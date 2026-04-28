@@ -18,7 +18,7 @@ interactiveElements.forEach(el => {
     el.addEventListener('mouseenter', () => {
         cursor.style.scale = '2.5';
         cursor.style.borderColor = 'var(--accent)';
-        cursor.style.background = 'rgba(0, 255, 136, 0.1)';
+        cursor.style.background = 'rgba(255, 71, 87, 0.1)';
     });
 
     el.addEventListener('mouseleave', () => {
@@ -67,12 +67,21 @@ document.querySelectorAll('.projects-list, .edu-grid, .cert-grid, .exp-timeline,
     observer.observe(container);
 });
 
-// Header shrink on scroll
+// Header shrink on scroll + scroll progress bar
 const header = document.querySelector('.header');
+const scrollProgress = document.querySelector('.scroll-progress');
 window.addEventListener('scroll', () => {
     if (window.scrollY > 100) {
         header.style.padding = '0.75rem 3rem';
     } else {
         header.style.padding = '1.25rem 3rem';
+    }
+
+    // Scroll progress
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    if (scrollProgress) {
+        scrollProgress.style.width = scrollPercent + '%';
     }
 }, { passive: true });

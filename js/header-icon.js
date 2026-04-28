@@ -22,7 +22,7 @@ function initHeaderIcon() {
     // Geometry: A sleek octahedron representing architecture/nodes
     const geometry = new THREE.OctahedronGeometry(1, 0);
     const material = new THREE.MeshPhongMaterial({
-        color: 0x00ff88,
+        color: 0xff4757,
         wireframe: true,
         transparent: true,
         opacity: 0.8
@@ -34,7 +34,7 @@ function initHeaderIcon() {
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
 
-    const pointLight = new THREE.PointLight(0x00f2fe, 1);
+    const pointLight = new THREE.PointLight(0xe84393, 1);
     pointLight.position.set(10, 10, 10);
     scene.add(pointLight);
 

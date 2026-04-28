@@ -6,13 +6,14 @@
 
 (function () {
     const CONTAINER_ID = 'skills-tree-container';
-    const PARTICLE_COUNT = 120;
-    const CONNECTION_DISTANCE = 2.8;
-    const MOUSE_RADIUS = 3.5;
+    const PARTICLE_COUNT = 200;
+    const CONNECTION_DISTANCE = 3.2;
+    const MOUSE_RADIUS = 4.0;
     const COLORS = [
-        new THREE.Color(0x00ff88), // accent green
-        new THREE.Color(0x00f2fe), // cyan
-        new THREE.Color(0x4facfe), // blue
+        new THREE.Color(0xff4757), // accent red
+        new THREE.Color(0xe84393), // rose
+        new THREE.Color(0xff6348), // warm orange
+        new THREE.Color(0xff7979), // soft coral
         new THREE.Color(0xffffff), // white accent
     ];
 
@@ -85,8 +86,8 @@
             velocities[i3 + 1] = (Math.random() - 0.5) * 0.002;
             velocities[i3 + 2] = (Math.random() - 0.5) * 0.002;
 
-            // Size variation
-            sizes[i] = Math.random() * 0.5 + 0.15;
+            // Size variation — larger and more varied for visibility
+            sizes[i] = Math.random() * 0.8 + 0.25;
 
             // Color from palette
             const color = COLORS[Math.floor(Math.random() * COLORS.length)];
@@ -138,7 +139,7 @@
                     float core = 1.0 - smoothstep(0.0, 0.15, d);
 
                     vec3 finalColor = mix(vColor, vec3(1.0), core * 0.6);
-                    float alpha = strength * vAlpha * 0.9;
+                    float alpha = strength * vAlpha * 1.0;
                     gl_FragColor = vec4(finalColor, alpha);
                 }
             `,
@@ -164,7 +165,7 @@
 
         const lineMaterial = new THREE.LineBasicMaterial({
             transparent: true,
-            opacity: 0.15,
+            opacity: 0.3,
             vertexColors: true,
             blending: THREE.AdditiveBlending,
             depthWrite: false,

@@ -15,6 +15,13 @@
 </head>
 
 <body>
+  <div class="scroll-progress"></div>
+  <div class="gradient-mesh">
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+  </div>
+  <canvas id="ambient-particles"></canvas>
   <div class="noise"></div>
   <div class="mouse-light"></div>
   <div class="cursor"></div>
@@ -47,7 +54,7 @@
             <span class="line accent-line">Pertierra Puche</span>
           </h1>
           <p class="hero-subtitle">Senior Software Architect</p>
-          <p class="hero-tagline">Delivering <strong>scalable, safety-critical systems</strong> for global leaders.<br>Deep architectural rigor meets <strong>high-availability cloud infrastructure</strong>.</p>
+          <p class="hero-tagline">Passionate about <strong>building AI products</strong> and delivering <strong>production-ready systems</strong>.<br>Deep architectural rigor meets <strong>high-availability cloud infrastructure</strong>.</p>
           <div class="hero-contact">
             <a href="mailto:eduardopertierrapuche@gmail.com" class="hero-pill">
               <span class="pill-icon">✉</span> Email
@@ -79,10 +86,12 @@
       </div>
       <div class="about-content">
         <p class="about-text">
-          Senior Software Architect (MSc) specialized in delivering <strong>scalable, safety-critical systems</strong> for
-          global leaders like Rolls-Royce and Volkswagen. Bridges deep architectural rigor
-          (Hexagonal, DDD, Event-Driven) with <strong>high-availability cloud infrastructure</strong> (AWS)
-          to deliver reliable, production-ready solutions.
+          I'm a Senior Software Architect (MSc) with a deep passion for <strong>building AI products</strong>
+          that push the boundaries of what's possible. I bridge architectural rigor
+          (Hexagonal, DDD, Event-Driven) with <strong>production-ready cloud infrastructure</strong> (AWS)
+          to deliver systems that don't just scale — they're bulletproof. Whether it's engineering
+          platforms for Rolls-Royce or pioneering AI-driven workflows, I thrive where
+          <strong>innovation meets reliability</strong>. Always happy to grab a ☕ and chat about the next big thing.
         </p>
         <div class="competencies">
           <div class="competency-group">
@@ -289,8 +298,8 @@
     <section id="contact" class="contact">
       <div class="contact-inner">
         <span class="section-label">05</span>
-        <h2 class="contact-title">Let's build something<br>remarkable together.</h2>
-        <p class="contact-subtitle">Open to roles, collaborations, and conversations about AI, architecture, and building great products.</p>
+        <h2 class="contact-title">Let's grab a coffee ☕<br>and build something remarkable.</h2>
+        <p class="contact-subtitle">Whether it's AI products, distributed systems, or geeking out about architecture — I'm always up for a great conversation.</p>
         <div class="contact-links">
           <a href="mailto:eduardopertierrapuche@gmail.com" class="contact-link">
             <span class="contact-link-label">Email</span>
@@ -316,6 +325,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="js/skills-tree.js"></script>
   <script src="js/header-icon.js"></script>
+  <script src="js/ambient-particles.js"></script>
   <script src="js/script.js"></script>
 </body>
 
