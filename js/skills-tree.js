@@ -1,27 +1,33 @@
 /**
- * Hero 3D Background — Flowing Wireframe Grid
- * An animated wave mesh filling the hero section.
- * Mouse creates ripples on the surface. Glowing node points at vertices.
- * Zero per-frame allocations.
+ * Hero 3D Background — Particle Constellation
+ * Floating connected particles filling the hero section.
+ * Mouse pushes nearby particles. Lines connect close neighbours.
+ * No custom shaders, no shared buffers, no camera drift.
  */
 
 (function () {
     const CONTAINER_ID = 'hero-3d-bg';
-    const SEGMENTS = 50;
-    const GRID_SCALE = 36;
-    const WAVE_HEIGHT = 1.0;
-    const MOUSE_RADIUS = 4.0;
-    const MOUSE_PUSH = 1.8;
+    const COUNT = 140;
+    const SPREAD_X = 24;
+    const SPREAD_Y = 18;
+    const SPREAD_Z = 6;
+    const CONNECT_DIST = 2.6;
+    const MAX_LINES = 700;
+    const MOUSE_RADIUS = 4;
+    const MOUSE_PUSH = 0.15;
 
-    let scene, camera, renderer;
-    let gridMesh, gridGeo, gridPoints;
-    let origY;
+    let scene, camera, renderer, heroEl;
+    let pointsMesh, linesMesh;
+    let pos, vel;
+    let linePositions, lineColors;
 
-    const mouse = { x: 999, y: 999 };
+    let mouseWorldX = 999, mouseWorldY = 999;
     let mouseActive = false;
 
-    const ACCENT = 0x6366f1;
-    const ACCENT_BRIGHT = 0x818cf8;
+    // Cached visible area at z=0 for mouse projection
+    let visHalfH = 1, visHalfW = 1;
+
+    let accentR, accentG, accentB;
 
     function init() {
         const container = document.getElementById(CONTAINER_ID);
@@ -37,158 +43,203 @@
         container.innerHTML = '';
 
         scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x050505, 0.028);
 
-        camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 200);
-        camera.position.set(0, 10, 16);
-        camera.lookAt(0, 0, -2);
+        camera = new THREE.PerspectiveCamera(55, w / h, 0.1, 100);
+        camera.position.set(0, 0, 20);
 
         renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         renderer.setSize(w, h);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.setClearColor(0x000000, 0);
         container.appendChild(renderer.domElement);
 
-        createGrid();
-        createVertexDots();
+        computeVisibleArea();
 
-        const hero = document.querySelector('.hero');
-        if (hero) {
-            hero.addEventListener('mousemove', onMouseMove);
-            hero.addEventListener('mouseleave', onMouseLeave);
+        const accent = new THREE.Color(0x6366f1);
+        accentR = accent.r;
+        accentG = accent.g;
+        accentB = accent.b;
+
+        createParticles();
+        createLines();
+
+        heroEl = document.querySelector('.hero');
+        if (heroEl) {
+            heroEl.addEventListener('mousemove', onMouseMove);
+            heroEl.addEventListener('mouseleave', onMouseLeave);
         }
 
         animate();
     }
 
-    function createGrid() {
-        gridGeo = new THREE.PlaneGeometry(GRID_SCALE, GRID_SCALE, SEGMENTS, SEGMENTS);
-        gridGeo.rotateX(-Math.PI * 0.5);
-
-        const mat = new THREE.MeshBasicMaterial({
-            color: ACCENT,
-            wireframe: true,
-            transparent: true,
-            opacity: 0.12,
-        });
-
-        gridMesh = new THREE.Mesh(gridGeo, mat);
-        scene.add(gridMesh);
-
-        const pos = gridGeo.attributes.position;
-        origY = new Float32Array(pos.count);
-        for (let i = 0; i < pos.count; i++) {
-            origY[i] = pos.getY(i);
-        }
+    function computeVisibleArea() {
+        const halfFovRad = camera.fov * Math.PI / 360;
+        visHalfH = Math.tan(halfFovRad) * camera.position.z;
+        visHalfW = visHalfH * camera.aspect;
     }
 
-    function createVertexDots() {
-        const pos = gridGeo.attributes.position;
-        const count = pos.count;
-        const sizes = new Float32Array(count);
-        const colors = new Float32Array(count * 3);
-        const c1 = new THREE.Color(ACCENT);
-        const c2 = new THREE.Color(ACCENT_BRIGHT);
+    function createDotTexture() {
+        const c = document.createElement('canvas');
+        c.width = 64;
+        c.height = 64;
+        const ctx = c.getContext('2d');
+        const g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+        g.addColorStop(0, 'rgba(255,255,255,1)');
+        g.addColorStop(0.2, 'rgba(255,255,255,0.6)');
+        g.addColorStop(0.5, 'rgba(255,255,255,0.15)');
+        g.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, 64, 64);
+        return new THREE.CanvasTexture(c);
+    }
 
-        for (let i = 0; i < count; i++) {
-            sizes[i] = Math.random() * 0.15 + 0.05;
-            const t = Math.random();
-            colors[i * 3] = c1.r + (c2.r - c1.r) * t;
-            colors[i * 3 + 1] = c1.g + (c2.g - c1.g) * t;
-            colors[i * 3 + 2] = c1.b + (c2.b - c1.b) * t;
+    function createParticles() {
+        pos = new Float32Array(COUNT * 3);
+        vel = new Float32Array(COUNT * 3);
+
+        for (let i = 0; i < COUNT; i++) {
+            const i3 = i * 3;
+            pos[i3] = (Math.random() - 0.5) * SPREAD_X;
+            pos[i3 + 1] = (Math.random() - 0.5) * SPREAD_Y;
+            pos[i3 + 2] = (Math.random() - 0.5) * SPREAD_Z;
+
+            vel[i3] = (Math.random() - 0.5) * 0.006;
+            vel[i3 + 1] = (Math.random() - 0.5) * 0.006;
+            vel[i3 + 2] = (Math.random() - 0.5) * 0.002;
         }
 
-        const dotGeo = new THREE.BufferGeometry();
-        dotGeo.setAttribute('position', pos);
-        dotGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-        dotGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
 
-        const mat = new THREE.ShaderMaterial({
-            uniforms: {
-                uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
-            },
-            vertexShader: [
-                'attribute float size;',
-                'attribute vec3 color;',
-                'varying vec3 vColor;',
-                'varying float vAlpha;',
-                'uniform float uPixelRatio;',
-                'void main() {',
-                '  vColor = color;',
-                '  vec4 mv = modelViewMatrix * vec4(position, 1.0);',
-                '  vAlpha = smoothstep(30.0, 5.0, length(mv.xyz));',
-                '  gl_PointSize = size * uPixelRatio * (200.0 / -mv.z);',
-                '  gl_Position = projectionMatrix * mv;',
-                '}',
-            ].join('\n'),
-            fragmentShader: [
-                'varying vec3 vColor;',
-                'varying float vAlpha;',
-                'void main() {',
-                '  float d = length(gl_PointCoord - 0.5);',
-                '  if (d > 0.5) discard;',
-                '  float glow = pow(1.0 - smoothstep(0.0, 0.5, d), 2.0);',
-                '  gl_FragColor = vec4(vColor, glow * vAlpha * 0.6);',
-                '}',
-            ].join('\n'),
+        const mat = new THREE.PointsMaterial({
+            color: 0x6366f1,
+            size: 0.25,
+            map: createDotTexture(),
             transparent: true,
-            depthWrite: false,
+            opacity: 0.85,
+            sizeAttenuation: true,
             blending: THREE.AdditiveBlending,
-            vertexColors: true,
+            depthWrite: false,
         });
 
-        gridPoints = new THREE.Points(dotGeo, mat);
-        scene.add(gridPoints);
+        pointsMesh = new THREE.Points(geo, mat);
+        scene.add(pointsMesh);
+    }
+
+    function createLines() {
+        linePositions = new Float32Array(MAX_LINES * 6);
+        lineColors = new Float32Array(MAX_LINES * 6);
+
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+        geo.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
+        geo.setDrawRange(0, 0);
+
+        const mat = new THREE.LineBasicMaterial({
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.6,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+        });
+
+        linesMesh = new THREE.LineSegments(geo, mat);
+        scene.add(linesMesh);
     }
 
     function onMouseMove(e) {
-        const hero = document.querySelector('.hero');
-        if (!hero) return;
-        const rect = hero.getBoundingClientRect();
-        const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-        const ny = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-
-        mouse.x = nx * GRID_SCALE * 0.5;
-        mouse.y = ny * GRID_SCALE * 0.35;
+        if (!heroEl) return;
+        const rect = heroEl.getBoundingClientRect();
+        const ndcX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        const ndcY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+        mouseWorldX = ndcX * visHalfW;
+        mouseWorldY = ndcY * visHalfH;
         mouseActive = true;
     }
 
     function onMouseLeave() {
         mouseActive = false;
+        mouseWorldX = 999;
+        mouseWorldY = 999;
+    }
+
+    function moveParticles() {
+        const halfX = SPREAD_X * 0.5;
+        const halfY = SPREAD_Y * 0.5;
+        const halfZ = SPREAD_Z * 0.5;
+
+        for (let i = 0; i < COUNT; i++) {
+            const i3 = i * 3;
+            pos[i3] += vel[i3];
+            pos[i3 + 1] += vel[i3 + 1];
+            pos[i3 + 2] += vel[i3 + 2];
+
+            if (pos[i3] > halfX) pos[i3] = -halfX;
+            if (pos[i3] < -halfX) pos[i3] = halfX;
+            if (pos[i3 + 1] > halfY) pos[i3 + 1] = -halfY;
+            if (pos[i3 + 1] < -halfY) pos[i3 + 1] = halfY;
+            if (pos[i3 + 2] > halfZ) pos[i3 + 2] = -halfZ;
+            if (pos[i3 + 2] < -halfZ) pos[i3 + 2] = halfZ;
+
+            if (mouseActive) {
+                const dx = pos[i3] - mouseWorldX;
+                const dy = pos[i3 + 1] - mouseWorldY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < MOUSE_RADIUS && dist > 0.01) {
+                    const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS;
+                    pos[i3] += (dx / dist) * force * MOUSE_PUSH;
+                    pos[i3 + 1] += (dy / dist) * force * MOUSE_PUSH;
+                }
+            }
+        }
+
+        pointsMesh.geometry.attributes.position.needsUpdate = true;
+    }
+
+    function updateConnections() {
+        let lineIdx = 0;
+        const connectSq = CONNECT_DIST * CONNECT_DIST;
+
+        for (let i = 0; i < COUNT && lineIdx < MAX_LINES; i++) {
+            const i3 = i * 3;
+            for (let j = i + 1; j < COUNT && lineIdx < MAX_LINES; j++) {
+                const j3 = j * 3;
+                const dx = pos[i3] - pos[j3];
+                const dy = pos[i3 + 1] - pos[j3 + 1];
+                const dz = pos[i3 + 2] - pos[j3 + 2];
+                const distSq = dx * dx + dy * dy + dz * dz;
+
+                if (distSq < connectSq) {
+                    const alpha = 1 - Math.sqrt(distSq) / CONNECT_DIST;
+                    const idx = lineIdx * 6;
+
+                    linePositions[idx] = pos[i3];
+                    linePositions[idx + 1] = pos[i3 + 1];
+                    linePositions[idx + 2] = pos[i3 + 2];
+                    linePositions[idx + 3] = pos[j3];
+                    linePositions[idx + 4] = pos[j3 + 1];
+                    linePositions[idx + 5] = pos[j3 + 2];
+
+                    lineColors[idx] = accentR * alpha;
+                    lineColors[idx + 1] = accentG * alpha;
+                    lineColors[idx + 2] = accentB * alpha;
+                    lineColors[idx + 3] = accentR * alpha;
+                    lineColors[idx + 4] = accentG * alpha;
+                    lineColors[idx + 5] = accentB * alpha;
+
+                    lineIdx++;
+                }
+            }
+        }
+
+        linesMesh.geometry.setDrawRange(0, lineIdx * 2);
+        linesMesh.geometry.attributes.position.needsUpdate = true;
+        linesMesh.geometry.attributes.color.needsUpdate = true;
     }
 
     function animate() {
         requestAnimationFrame(animate);
-
-        const time = performance.now() * 0.001;
-        const pos = gridGeo.attributes.position;
-
-        for (let i = 0; i < pos.count; i++) {
-            const x = pos.getX(i);
-            const z = pos.getZ(i);
-
-            let y = origY[i];
-            y += Math.sin(x * 0.35 + time * 0.5) * WAVE_HEIGHT * 0.5;
-            y += Math.cos(z * 0.28 + time * 0.4) * WAVE_HEIGHT * 0.4;
-            y += Math.sin((x + z) * 0.18 + time * 0.25) * WAVE_HEIGHT * 0.3;
-
-            if (mouseActive) {
-                const dx = x - mouse.x;
-                const dz = z - mouse.y;
-                const dist = Math.sqrt(dx * dx + dz * dz);
-                if (dist < MOUSE_RADIUS) {
-                    const factor = 1 - dist / MOUSE_RADIUS;
-                    y += Math.sin(dist * 2.5 - time * 5) * factor * factor * MOUSE_PUSH;
-                }
-            }
-
-            pos.setY(i, y);
-        }
-        pos.needsUpdate = true;
-
-        camera.position.x = Math.sin(time * 0.08) * 1.5;
-        camera.position.y = 10 + Math.sin(time * 0.12) * 0.5;
-
+        moveParticles();
+        updateConnections();
         renderer.render(scene, camera);
     }
 
@@ -201,6 +252,7 @@
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
         renderer.setSize(w, h);
+        computeVisibleArea();
     }
 
     document.addEventListener('DOMContentLoaded', init);
