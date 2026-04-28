@@ -1,21 +1,19 @@
-// Custom cursor and Lighting effect
+// Custom cursor
 const cursor = document.querySelector('.cursor');
 
 document.addEventListener('mousemove', (e) => {
     const x = e.clientX;
     const y = e.clientY;
 
-    // Update cursor position
     cursor.style.left = `${x}px`;
     cursor.style.top = `${y}px`;
 
-    // Update lighting effect position
     document.documentElement.style.setProperty('--mouse-x', `${x}px`);
     document.documentElement.style.setProperty('--mouse-y', `${y}px`);
 });
 
 // Cursor hover effects
-const interactiveElements = document.querySelectorAll('a, .project, circle, .cert-item');
+const interactiveElements = document.querySelectorAll('a, button, circle, .cert-item, .competency-group, .project-card, .contact-link');
 interactiveElements.forEach(el => {
     el.addEventListener('mouseenter', () => {
         cursor.style.scale = '2.5';
@@ -44,26 +42,37 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Intersection Observer for animations
+// Intersection Observer with stagger support
 const observerOptions = {
-    threshold: 0.2,
-    rootMargin: '0px'
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
 };
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+            entry.target.classList.add('visible');
         }
     });
 }, observerOptions);
 
-// Observe sections
-document.querySelectorAll('section').forEach(section => {
-    section.style.opacity = '0';
-    section.style.transform = 'translateY(50px)';
-    section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+// Observe all sections and stagger containers
+document.querySelectorAll('section:not(.hero)').forEach(section => {
+    section.classList.add('reveal');
     observer.observe(section);
 });
 
+document.querySelectorAll('.projects-list, .edu-grid, .cert-grid, .exp-timeline, .competencies').forEach(container => {
+    container.classList.add('stagger-children');
+    observer.observe(container);
+});
+
+// Header shrink on scroll
+const header = document.querySelector('.header');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+        header.style.padding = '0.75rem 3rem';
+    } else {
+        header.style.padding = '1.25rem 3rem';
+    }
+}, { passive: true });

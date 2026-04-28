@@ -98,7 +98,7 @@ class SkillNode {
         this.text.setAttribute("fill", "#ffffff");
         this.text.style.fontSize = this.depth === 0 ? "18px" : "13px";
         this.text.style.fontWeight = this.depth === 0 ? "700" : "500";
-        this.text.style.fontFamily = "'Space Grotesk', sans-serif";
+        this.text.style.fontFamily = "'Inter', -apple-system, sans-serif";
         this.text.style.pointerEvents = "none";
         this.text.style.opacity = "1";
         this.text.textContent = this.data.name;

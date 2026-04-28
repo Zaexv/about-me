@@ -4,27 +4,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eduardo Pertierra Puche</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+  <title>Eduardo Pertierra Puche — Senior Software Architect</title>
+  <meta name="description" content="Senior Software Architect specialized in AI Agents, Formal Methods, and Scalable Systems. Based in Hamburg, Germany.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+  <div class="noise"></div>
   <div class="mouse-light"></div>
-
   <div class="cursor"></div>
 
   <header class="header">
     <nav class="nav">
       <div class="logo">
         <div id="header-3d-container"></div>
-        EP.
+        <span class="logo-text">EP<span class="logo-dot">.</span></span>
       </div>
       <div class="nav-links">
-        <a href="#work">Work</a>
         <a href="#about">About</a>
-        <a href="#contact">Contact</a>
+        <a href="#experience">Experience</a>
+        <a href="#notable-projects">Projects</a>
+        <a href="#contact" class="nav-cta">Get in Touch</a>
       </div>
     </nav>
   </header>
@@ -33,88 +38,112 @@
     <section class="hero">
       <div class="hero-layout">
         <div class="hero-left">
+          <div class="hero-badge">
+            <span class="status-dot"></span>
+            Available for opportunities
+          </div>
           <h1 class="hero-title">
             <span class="line">Eduardo</span>
-            <span class="line">Pertierra Puche</span>
+            <span class="line accent-line">Pertierra Puche</span>
           </h1>
           <p class="hero-subtitle">Senior Software Architect</p>
-          <p class="hero-tagline">AI Agents & Formal Methods Specialist</p>
+          <p class="hero-tagline">I build scalable systems and lead teams at the intersection of<br><strong>AI Agents</strong> &amp; <strong>Formal Methods</strong>.</p>
           <div class="hero-contact">
-            <span>📍 Hamburg, Germany</span> •
-            <span>📞 (+34) 646 677 095</span> •
-            <span>✉️ <a href="mailto:eduardopertierrapuche@gmail.com">eduardopertierrapuche@gmail.com</a></span> •
-            <span>🔗 <a href="https://www.linkedin.com/in/epertierra/?locale=en_EN" target="_blank">LinkedIn</a></span>
+            <a href="mailto:eduardopertierrapuche@gmail.com" class="hero-pill">
+              <span class="pill-icon">✉</span> Email
+            </a>
+            <a href="https://www.linkedin.com/in/epertierra/?locale=en_EN" target="_blank" class="hero-pill">
+              <span class="pill-icon">in</span> LinkedIn
+            </a>
+            <a href="https://github.com/Zaexv" target="_blank" class="hero-pill">
+              <span class="pill-icon">&lt;/&gt;</span> GitHub
+            </a>
+            <span class="hero-pill hero-pill--muted">
+              <span class="pill-icon">📍</span> Hamburg, DE
+            </span>
           </div>
         </div>
         <div class="hero-right">
-          <div id="skills-tree-container">
-            <!-- Physics-based SVG Tree will be injected here -->
-          </div>
+          <div id="skills-tree-container"></div>
         </div>
       </div>
     </section>
 
-
-
     <section id="about" class="about">
-      <h2 class="section-title">About</h2>
+      <div class="section-header">
+        <span class="section-label">01</span>
+        <h2 class="section-title">About</h2>
+      </div>
       <div class="about-content">
         <p class="about-text">
           Senior Software Architect specialized in Software Engineering, Formal Methods, and Artificial Intelligence.
-          Driven by a passion for building Scalable Systems and leading engineering teams towards strategic AI
+          Driven by a passion for building <strong>Scalable Systems</strong> and leading engineering teams towards strategic AI
           integration.
           Leverages a rigorous academic background to bridge the gap between deterministic engineering and modern AI,
-          designing resilient architectures that enable enterprise-grade Agentic AI adoption.
+          designing resilient architectures that enable enterprise-grade <strong>Agentic AI</strong> adoption.
         </p>
         <div class="competencies">
           <div class="competency-group">
+            <div class="competency-icon">⬡</div>
             <h4>Architecture</h4>
             <p>Scalable Microservices, Hexagonal Architecture, Domain-Driven Design (DDD), Distributed Systems, High
               Availability</p>
           </div>
           <div class="competency-group">
-            <h4>AI & Data</h4>
-            <p>RAG Patterns, Model Context Protocol (MCP), Multi-Agent Systems, AI Safety & Verification</p>
+            <div class="competency-icon">◈</div>
+            <h4>AI &amp; Data</h4>
+            <p>RAG Patterns, Model Context Protocol (MCP), Multi-Agent Systems, AI Safety &amp; Verification</p>
           </div>
           <div class="competency-group">
-            <h4>Stack & Infra</h4>
+            <div class="competency-icon">⟐</div>
+            <h4>Stack &amp; Infra</h4>
             <p>Python (Django), Kotlin, Java (Spring), AWS Cloud, Kubernetes, Docker, Terraform, CI/CD Pipelines</p>
           </div>
         </div>
       </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <section id="experience" class="experience">
-      <h2 class="section-title">Professional Experience</h2>
+      <div class="section-header">
+        <span class="section-label">02</span>
+        <h2 class="section-title">Experience</h2>
+      </div>
       <div class="exp-timeline">
         <div class="exp-item">
           <div class="exp-header">
-            <h3>Senior Software Architect (Consultant)</h3>
-            <span class="exp-company">MaibornWolff | 2022 – Present</span>
+            <div>
+              <h3>Senior Software Architect <span class="exp-type">(Consultant)</span></h3>
+              <p class="exp-lead">Critical Systems for Rolls-Royce &amp; Volkswagen Group</p>
+            </div>
+            <span class="exp-company">MaibornWolff · 2022 – Present</span>
           </div>
-          <p class="exp-lead">Critical Systems for Rolls-Royce & Volkswagen Group</p>
 
           <div class="experience-sub">
-            <h4 class="sub-title">Rolls-Royce "Whispers" Platform (Architecture & AI Leadership)</h4>
+            <h4 class="sub-title">Rolls-Royce "Whispers" Platform</h4>
+            <span class="sub-label">Architecture &amp; AI Leadership</span>
             <ul>
-              <li><strong>Infrastructure & Architecture Leadership:</strong> Led the entire infrastructure strategy and
+              <li><strong>Infrastructure Leadership:</strong> Led the entire infrastructure strategy and
                 team, ensuring global scalability and resilience. Architected a zero-data-loss backup and security
                 system.</li>
-              <li><strong>AI-Driven Development Strategy:</strong> Guided the development team by implementing Virtual
+              <li><strong>AI-Driven Development:</strong> Guided the development team by implementing Virtual
                 Agents for Development, establishing new standards for developer velocity.</li>
               <li><strong>AI Product Integration:</strong> Spearheaded the roadmap and execution of all AI integrations,
                 acting as the technical owner for AI features.</li>
               <li><strong>Feature Leadership:</strong> Led the design and delivery of several core platform features,
                 with a specialized focus on large-scale <strong>Data Ingestion</strong> pipelines.</li>
-              <li><strong>Operational Excellence:</strong> Reduced daily error rates from 1,000+ to <10 (99% reduction)
-                  by re-engineering database operations and monitoring pipelines.</li>
+              <li><strong>Operational Excellence:</strong> Reduced daily error rates from 1,000+ to &lt;10
+                <span class="highlight-stat">(99% reduction)</span>
+                by re-engineering database operations and monitoring pipelines.</li>
             </ul>
 
-            <h4 class="sub-title">Volkswagen Group (Control Center & Autonomous Trucking)</h4>
+            <h4 class="sub-title">Volkswagen Group</h4>
+            <span class="sub-label">Control Center &amp; Autonomous Trucking</span>
             <ul>
-              <li><strong>Technical Lead & Architecture:</strong> Led the client-side engineering team to define and
+              <li><strong>Technical Lead:</strong> Led the client-side engineering team to define and
                 develop a Scalable Microservices Architecture for the Control Center platform.</li>
-              <li><strong>IoT & Embedded Integration:</strong> Established low-latency connections with Autonomous Truck
+              <li><strong>IoT &amp; Embedded Integration:</strong> Established low-latency connections with Autonomous Truck
                 Embedded Systems, bridging hardware telemetry and cloud services.</li>
               <li><strong>Real-Time Streaming:</strong> Architected real-time camera feeds for remote truck monitoring,
                 ensuring high availability and minimal lag.</li>
@@ -122,7 +151,7 @@
                 Boot on AWS.</li>
             </ul>
 
-            <h4 class="sub-title">Leadership & Strategy</h4>
+            <h4 class="sub-title">Leadership &amp; Strategy</h4>
             <ul>
               <li><strong>Team Lead:</strong> Led a 7-person squad developing an internal "App Store" using Spring
                 Framework.</li>
@@ -136,10 +165,12 @@
 
         <div class="exp-item">
           <div class="exp-header">
-            <h3>Startup Lead</h3>
-            <span class="exp-company">Private Startup Project | 2020 – 2022</span>
+            <div>
+              <h3>Startup Lead</h3>
+              <p class="exp-lead">Technical &amp; Product Leadership</p>
+            </div>
+            <span class="exp-company">Private Startup Project · 2020 – 2022</span>
           </div>
-          <p class="exp-lead">Technical & Product Leadership</p>
           <ul>
             <li>Led the end-to-end development and strategic direction of a private startup venture.</li>
             <li>Defined product roadmap and orchestrated technical architecture for scalable growth.</li>
@@ -148,8 +179,11 @@
 
         <div class="exp-item">
           <div class="exp-header">
-            <h3>Support Engineer</h3>
-            <span class="exp-company">Ebury Partners | 2019 – 2020</span>
+            <div>
+              <h3>Support Engineer</h3>
+              <p class="exp-lead">Level 2 Technical Support</p>
+            </div>
+            <span class="exp-company">Ebury Partners · 2019 – 2020</span>
           </div>
           <ul>
             <li>Level 2 Technical Support for high-transaction fintech platform.</li>
@@ -159,24 +193,29 @@
       </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <section id="education" class="education">
-      <h2 class="section-title">Education & Certifications</h2>
+      <div class="section-header">
+        <span class="section-label">03</span>
+        <h2 class="section-title">Education &amp; Certifications</h2>
+      </div>
       <div class="edu-grid">
         <div class="edu-item">
           <div class="edu-main">
             <h4>Master in Software Systems Engineering and Technology</h4>
-            <p>Polytechnic University of Valencia | 2022</p>
+            <p>Polytechnic University of Valencia · 2022</p>
             <span class="badge">Honor Mention</span>
           </div>
           <div class="edu-details">
-            <p>Specialization: Advanced Software Engineering & Formal Verification.</p>
+            <p>Specialization: Advanced Software Engineering &amp; Formal Verification.</p>
             <p>Rigorous methodologies for software analysis, model checking, and system optimization.</p>
             <p class="excellence">Accredited with EURO-INF International Label of Excellence.</p>
           </div>
         </div>
         <div class="edu-item">
           <h4>Software Engineering Degree</h4>
-          <p>University of Málaga / UPC | 2019</p>
+          <p>University of Málaga / UPC · 2019</p>
           <span class="badge">Honor Mention (Thesis)</span>
         </div>
       </div>
@@ -186,49 +225,79 @@
         <div class="cert-grid">
           <div class="cert-item">
             <strong>Deeptech Certification</strong>
-            <span>AI & Startup Strategy | EOI | 2025</span>
+            <span>AI &amp; Startup Strategy · EOI · 2025</span>
           </div>
           <div class="cert-item">
             <strong>CPSA-F</strong>
-            <span>Certified Fundamentals Software Architect | iSAQB | 2024</span>
+            <span>Certified Fundamentals Software Architect · iSAQB · 2024</span>
           </div>
         </div>
       </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <section id="notable-projects" class="projects">
-      <h2 class="section-title">Notable Projects</h2>
+      <div class="section-header">
+        <span class="section-label">04</span>
+        <h2 class="section-title">Projects</h2>
+      </div>
       <div class="projects-list">
         <div class="project-card">
-          <h4>Space Agents 🛸</h4>
-          <p>Hackathon project: Agentic Space Exploration combining AI agents with NASA data. Features real-time mission
-            planning, spacecraft control simulation, and multi-agent coordination.</p>
-          <a href="https://agentic-space-exploration.pages.dev/" target="_blank" class="project-link">View Project →</a>
+          <div class="project-card-inner">
+            <span class="project-tag">Hackathon</span>
+            <h4>Space Agents 🛸</h4>
+            <p>Agentic Space Exploration combining AI agents with NASA data. Features real-time mission
+              planning, spacecraft control simulation, and multi-agent coordination.</p>
+            <a href="https://agentic-space-exploration.pages.dev/" target="_blank" class="project-link">View Project
+              <span class="arrow">→</span></a>
+          </div>
         </div>
         <div class="project-card">
-          <h4>Autonomous Virtual Agents</h4>
-          <p>Architecting deterministic Virtual Agent workflows using MCP (Model Context Protocol). Focusing on agentic
-            reasoning and tool use for complex task automation.</p>
+          <div class="project-card-inner">
+            <span class="project-tag">Ongoing</span>
+            <h4>Autonomous Virtual Agents</h4>
+            <p>Architecting deterministic Virtual Agent workflows using MCP (Model Context Protocol). Focusing on agentic
+              reasoning and tool use for complex task automation.</p>
+          </div>
         </div>
         <div class="project-card">
-          <h4>PlanItNow!</h4>
-          <p>Designed intelligent social planning algorithms based on geolocation and user ranking metrics.</p>
+          <div class="project-card-inner">
+            <span class="project-tag">Product</span>
+            <h4>PlanItNow!</h4>
+            <p>Designed intelligent social planning algorithms based on geolocation and user ranking metrics.</p>
+          </div>
         </div>
       </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <section id="contact" class="contact">
-      <h2 class="section-title">Let's Connect</h2>
-      <div class="contact-links">
-        <a href="mailto:eduardopertierrapuche@gmail.com" class="contact-link">Email</a>
-        <a href="https://github.com/Zaexv" target="_blank" class="contact-link">GitHub</a>
-        <a href="https://www.linkedin.com/in/epertierra/?locale=en_EN" target="_blank" class="contact-link">LinkedIn</a>
+      <div class="contact-inner">
+        <span class="section-label">05</span>
+        <h2 class="contact-title">Let's build something<br>remarkable together.</h2>
+        <p class="contact-subtitle">Open to roles, collaborations, and conversations about AI, architecture, and building great products.</p>
+        <div class="contact-links">
+          <a href="mailto:eduardopertierrapuche@gmail.com" class="contact-link">
+            <span class="contact-link-label">Email</span>
+            <span class="contact-link-value">eduardopertierrapuche@gmail.com</span>
+          </a>
+          <a href="https://github.com/Zaexv" target="_blank" class="contact-link">
+            <span class="contact-link-label">GitHub</span>
+            <span class="contact-link-value">github.com/Zaexv</span>
+          </a>
+          <a href="https://www.linkedin.com/in/epertierra/?locale=en_EN" target="_blank" class="contact-link">
+            <span class="contact-link-label">LinkedIn</span>
+            <span class="contact-link-value">linkedin.com/in/epertierra</span>
+          </a>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <p>© 2026 Eduardo Pertierra Puche</p>
+    <p>© 2026 Eduardo Pertierra Puche · Designed with craft.</p>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

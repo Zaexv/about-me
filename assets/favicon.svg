@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#050505"/>
+  <text x="32" y="44" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="800" font-size="30" fill="#ffffff">EP</text>
+  <circle cx="52" cy="42" r="4" fill="#00ff88"/>
+</svg>
