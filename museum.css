@@ -84,6 +84,7 @@ html,body{
 /* ── Info side ── */
 .r-info{
   flex:1;min-width:0;max-width:500px;
+  padding-right:1rem;
 }
 
 /* stagger children in */
@@ -129,6 +130,7 @@ html,body{
   font-weight:900;line-height:.93;
   letter-spacing:-.035em;
   margin-bottom:.9rem;
+  overflow-wrap:break-word;
 }
 .grad{
   display:inline-block;
@@ -144,6 +146,7 @@ html,body{
 .r-desc{
   font-size:.88rem;line-height:1.7;
   color:var(--dim);margin-bottom:1rem;
+  word-break:break-word;overflow-wrap:break-word;
 }
 .r-desc strong{color:var(--text)}
 
@@ -201,6 +204,8 @@ html,body{
   width:100%;height:100%;border:none;
   pointer-events:none;
   display:block;
+  transform:scale(1.2);
+  transform-origin:center center;
 }
 .screen-shield{
   position:absolute;inset:0;z-index:2;

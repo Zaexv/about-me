@@ -17,7 +17,7 @@ let busy = false;
 let camZ = null;
 
 /* Three globals */
-let camera, renderer, scene, dustGeo;
+let camera, renderer, scene, dustGeo, sparkGeo, sparkMat;
 const clock = new THREE.Clock();
 
 /* DOM */
@@ -47,6 +47,7 @@ function init() {
   renderer.setClearColor(0x050505, 1);
 
   buildParticles();
+  buildSparkles();
   buildLights();
   buildShapes();
   buildNav();
@@ -104,6 +105,84 @@ function tintParticles(idx) {
     }
   }
   ca.needsUpdate = true;
+
+  if (sparkGeo) {
+    const sc = sparkGeo.attributes.aColor;
+    const sp = sparkGeo.attributes.position;
+    for (let i = 0; i < sc.count; i++) {
+      const d = Math.abs(sp.getZ(i) - rz);
+      if (d < SPACING * 0.65) {
+        sc.setXYZ(i, c[0], c[1], c[2]);
+      }
+    }
+    sc.needsUpdate = true;
+  }
+}
+
+/* ═══════════ SPARKLES (twinkle shader) ═══════════ */
+function buildSparkles() {
+  const N = 250;
+  const totalZ = COUNT * SPACING + 40;
+  const positions = new Float32Array(N * 3);
+  const sizes = new Float32Array(N);
+  const phases = new Float32Array(N);
+  const colors = new Float32Array(N * 3);
+  const c = ROOMS[0].color;
+
+  for (let i = 0; i < N; i++) {
+    positions[i * 3]     = (Math.random() - 0.5) * 55;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * 32;
+    positions[i * 3 + 2] = 20 - Math.random() * totalZ;
+    sizes[i] = 0.4 + Math.random() * 2.2;
+    phases[i] = Math.random() * Math.PI * 2;
+    colors[i * 3]     = c[0];
+    colors[i * 3 + 1] = c[1];
+    colors[i * 3 + 2] = c[2];
+  }
+
+  sparkGeo = new THREE.BufferGeometry();
+  sparkGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  sparkGeo.setAttribute('aSize',    new THREE.BufferAttribute(sizes, 1));
+  sparkGeo.setAttribute('aPhase',   new THREE.BufferAttribute(phases, 1));
+  sparkGeo.setAttribute('aColor',   new THREE.BufferAttribute(colors, 3));
+
+  sparkMat = new THREE.ShaderMaterial({
+    uniforms: { uTime: { value: 0 } },
+    vertexShader: `
+      attribute float aSize;
+      attribute float aPhase;
+      attribute vec3 aColor;
+      uniform float uTime;
+      varying float vAlpha;
+      varying vec3 vColor;
+      void main() {
+        vColor = aColor;
+        float twinkle = sin(uTime * 1.8 + aPhase) * 0.5 + 0.5;
+        twinkle = pow(twinkle, 4.0);
+        vAlpha = 0.05 + 0.95 * twinkle;
+        vec4 mv = modelViewMatrix * vec4(position, 1.0);
+        gl_PointSize = aSize * (0.3 + 0.7 * twinkle) * (200.0 / -mv.z);
+        gl_Position = projectionMatrix * mv;
+      }
+    `,
+    fragmentShader: `
+      varying float vAlpha;
+      varying vec3 vColor;
+      void main() {
+        float d = length(gl_PointCoord - vec2(0.5));
+        if (d > 0.5) discard;
+        float core = exp(-d * d * 28.0);
+        float glow = exp(-d * d * 5.0);
+        float b = core * 0.7 + glow * 0.3;
+        gl_FragColor = vec4(vColor * (0.5 + b * 0.5), vAlpha * b);
+      }
+    `,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  });
+
+  scene.add(new THREE.Points(sparkGeo, sparkMat));
 }
 
 /* ═══════════ LIGHTS ═══════════ */
@@ -259,6 +338,9 @@ function tick() {
       o.position.y = o.userData.base.y + Math.sin(t * s * 2) * 0.4;
     }
   });
+
+  /* Sparkle twinkle */
+  if (sparkMat) sparkMat.uniforms.uTime.value = t;
 
   renderer.render(scene, camera);
 }
