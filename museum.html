@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="museum.css?v=7">
+  <link rel="stylesheet" href="museum.css?v=8">
 </head>
 <body>
 
@@ -23,21 +23,24 @@
   <!-- Flash -->
   <div id="flash"></div>
 
-  <!-- Museum Entrance -->
-  <div id="entrance">
-    <div class="ent-content">
-      <div class="ent-pre">Welcome to</div>
-      <h1 class="ent-title">The <span class="ent-grad">Museum</span></h1>
-      <p class="ent-sub">A curated journey through AI-powered experiences</p>
-      <button id="enter-btn" class="ent-btn">Enter Museum →</button>
-    </div>
-  </div>
-
   <!-- ═══ ROOMS ═══ -->
   <div id="rooms">
 
-    <!-- Room 0 — Promptcraft -->
+    <!-- Room 0 — Entrance -->
     <section class="room active" data-idx="0">
+      <div class="r-inner">
+        <div class="ent-slide">
+          <div class="ent-line ent-l1">Welcome to</div>
+          <h1 class="ent-line ent-l2">The <span>Museum</span></h1>
+          <div class="ent-line ent-l3">of Eduardo's Projects</div>
+          <div class="ent-line ent-div"></div>
+          <p class="ent-line ent-l4">Navigate with arrows to explore →</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Room 1 — Promptcraft -->
+    <section class="room" data-idx="1">
       <div class="r-inner">
         <div class="r-info">
           <span class="r-tag">⚔️ Multi-Agent RPG</span>
@@ -67,8 +70,8 @@
       </div>
     </section>
 
-    <!-- Room 1 — SpAIce -->
-    <section class="room" data-idx="1">
+    <!-- Room 2 — SpAIce -->
+    <section class="room" data-idx="2">
       <div class="r-inner">
         <div class="r-info">
           <span class="r-tag">🛸 Live · 4k+ views/mo</span>
@@ -100,8 +103,8 @@
       </div>
     </section>
 
-    <!-- Room 2 — Digital Twin -->
-    <section class="room" data-idx="2">
+    <!-- Room 3 — Digital Twin -->
+    <section class="room" data-idx="3">
       <div class="r-inner">
         <div class="r-info">
           <span class="r-tag">🧠 AI Agents · RAG · Production</span>
@@ -127,8 +130,8 @@
       </div>
     </section>
 
-    <!-- Room 3 — PlanItNow -->
-    <section class="room" data-idx="3">
+    <!-- Room 4 — PlanItNow -->
+    <section class="room" data-idx="4">
       <div class="r-inner">
         <div class="r-info">
           <span class="r-tag">📍 Startup · Distributed Systems</span>
@@ -169,6 +172,6 @@
   <a href="index.html" id="back">← Portfolio</a>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="js/museum.js?v=7"></script>
+  <script src="js/museum.js?v=8"></script>
 </body>
 </html>
