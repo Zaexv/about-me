@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eduardo Pertierra Puche — 3D Museum Portfolio</title>
+  <meta name="description"
+    content="Walk through a 3D museum showcasing the work of Eduardo Pertierra Puche — Senior Software Architect.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="museum.css">
+</head>
+
+<body>
+  <!-- Loading screen -->
+  <div id="loading-screen">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <p class="loader-text">Entering the museum…</p>
+    </div>
+  </div>
+
+  <!-- 3D Canvas -->
+  <canvas id="museum-canvas"></canvas>
+
+  <!-- HTML Overlays — one per room, toggled via JS -->
+  <div id="overlay-container">
+    <!-- Room 0: Entrance -->
+    <div class="room-overlay" data-room="0">
+      <div class="overlay-center">
+        <div class="entrance-badge"><span class="status-dot"></span> Available for opportunities</div>
+        <h1 class="entrance-title">Eduardo<br><span class="accent">Pertierra Puche</span></h1>
+        <p class="entrance-subtitle">Senior Software Architect</p>
+        <p class="entrance-tagline">Passionate about <strong>building AI products</strong> and delivering
+          <strong>production-ready systems</strong>.</p>
+      </div>
+    </div>
+
+    <!-- Room 1: About -->
+    <div class="room-overlay" data-room="1">
+      <div class="overlay-panel overlay-left">
+        <span class="section-label">01</span>
+        <h2>About</h2>
+        <p>Senior Software Architect (MSc) bridging architectural rigor (Hexagonal, DDD, Event-Driven) with
+          production-ready cloud infrastructure (AWS). Whether it's engineering platforms for Rolls-Royce or pioneering
+          AI-driven workflows — innovation meets reliability.</p>
+      </div>
+      <div class="overlay-right competency-grid">
+        <div class="competency-card">
+          <div class="competency-icon">⬡</div>
+          <h4>Architecture</h4>
+          <p>Hexagonal, DDD, Event-Driven, Microservices</p>
+        </div>
+        <div class="competency-card">
+          <div class="competency-icon">⟐</div>
+          <h4>Backend &amp; Cloud</h4>
+          <p>Java, Kotlin, Python, AWS, K8s, Terraform</p>
+        </div>
+        <div class="competency-card">
+          <div class="competency-icon">◇</div>
+          <h4>Engineering</h4>
+          <p>Reliability, Zero-Data-Loss, IoT, Streaming</p>
+        </div>
+        <div class="competency-card">
+          <div class="competency-icon">◈</div>
+          <h4>AI Integration</h4>
+          <p>RAG, Multi-Agent Systems, MCP</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Room 2: Experience -->
+    <div class="room-overlay" data-room="2">
+      <div class="overlay-panel overlay-scroll">
+        <span class="section-label">02</span>
+        <h2>Experience</h2>
+        <div class="exp-entry">
+          <h3>Software Architect <span class="muted">· MaibornWolff · 2022–Present</span></h3>
+          <div class="exp-sub">
+            <h4>Rolls-Royce — Whispers Platform</h4>
+            <ul>
+              <li>Engineered core feed algorithm — <strong>30% engagement increase</strong></li>
+              <li>Zero-data-loss Event-Driven Architecture via AWS EventBridge</li>
+              <li>Zero downtime via Terraform infrastructure migration</li>
+              <li>Pioneered AI-Driven development — <strong>60% velocity boost</strong></li>
+            </ul>
+          </div>
+          <div class="exp-sub">
+            <h4>Volkswagen — MAN Autonomous Truck Control Center</h4>
+            <ul>
+              <li>Greenfield microservices on AWS Fargate/CDK</li>
+              <li>Ultra-low latency gRPC bridges — <strong>&lt;100ms telemetry</strong></li>
+              <li>Led 5-person team — <strong>40% deployment frequency increase</strong></li>
+            </ul>
+          </div>
+          <div class="exp-sub">
+            <h4>Pincamp — ADAC · Legacy Modernization</h4>
+            <ul>
+              <li>Refactored 10,000+ lines of Python (Django/FastAPI)</li>
+              <li>Partner onboarding reduced to <strong>&lt;2 days per sprint</strong></li>
+            </ul>
+          </div>
+        </div>
+        <div class="exp-entry">
+          <h3>Support Engineer <span class="muted">· Ebury Partners · 2019–2020</span></h3>
+          <ul>
+            <li>L2 operations for fintech platform — 10,000+ daily transactions</li>
+            <li>Automated 10+ critical incidents/month</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Room 3: Projects -->
+    <div class="room-overlay" data-room="3">
+      <div class="overlay-panel overlay-scroll">
+        <span class="section-label">03</span>
+        <h2>Projects &amp; R&amp;D</h2>
+        <div class="project-grid">
+          <div class="project-exhibit">
+            <span class="project-tag">Deployed · 4k+ views/mo</span>
+            <h4>SpAIce 🛸</h4>
+            <p>AI-Driven 3D Space Exploration Engine. LLM semantic search + Three.js real-time rendering.</p>
+            <a href="https://agentic-space-exploration.pages.dev/" target="_blank" class="exhibit-link">View →</a>
+          </div>
+          <div class="project-exhibit">
+            <span class="project-tag">AI Agents · RAG</span>
+            <h4>My Digital Twin</h4>
+            <p>Semantic router with LangGraph coordinating 5 specialized RAG agents over personal data.</p>
+          </div>
+          <div class="project-exhibit">
+            <span class="project-tag">Multi-Agent Systems</span>
+            <h4>AI-Based RPG</h4>
+            <p>Supervisor agent pattern for autonomous multi-agent interactions with procedural world generation.</p>
+          </div>
+          <div class="project-exhibit">
+            <span class="project-tag">Distributed Systems</span>
+            <h4>Social Planning App</h4>
+            <p>Geolocation-based startup on Python/Django/GCP for millions of social interactions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Room 4: Cinema -->
+    <div class="room-overlay" data-room="4">
+      <div class="overlay-center cinema-overlay">
+        <span class="section-label">04</span>
+        <h2>World of Promptcraft</h2>
+        <div class="cinema-embed" id="cinema-embed">
+          <iframe
+            id="yt-player"
+            src="https://www.youtube.com/embed/TdmNPD9wOhA?rel=0&modestbranding=1&color=white"
+            title="World of Promptcraft"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- Room 5: Contact -->
+    <div class="room-overlay" data-room="5">
+      <div class="overlay-center">
+        <span class="section-label">05</span>
+        <h2 class="contact-title">Let's grab a coffee ☕<br>and build something remarkable.</h2>
+        <p class="contact-sub">AI products, distributed systems, or geeking out about architecture — always up for a
+          great conversation.</p>
+        <div class="contact-links">
+          <a href="mailto:eduardopertierrapuche@gmail.com" class="contact-pill">✉ Email</a>
+          <a href="https://www.linkedin.com/in/epertierra/?locale=en_EN" target="_blank" class="contact-pill">in
+            LinkedIn</a>
+          <a href="https://github.com/Zaexv" target="_blank" class="contact-pill">&lt;/&gt; GitHub</a>
+        </div>
+        <div class="contact-meta">
+          <span>📍 Hamburg, DE</span>
+          <span>🇪🇺 EU Citizen</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation UI -->
+  <nav id="museum-nav">
+    <button id="nav-prev" class="nav-arrow" aria-label="Previous room">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+    <div id="nav-dots"></div>
+    <button id="nav-next" class="nav-arrow" aria-label="Next room">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="9 6 15 12 9 18"></polyline>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Room label -->
+  <div id="room-label"></div>
+
+  <!-- Back to classic link -->
+  <a href="index.html" id="classic-link" title="Switch to classic view">Classic View</a>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/museum.js"></script>
+</body>
+
+</html>
