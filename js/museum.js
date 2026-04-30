@@ -29,6 +29,8 @@ const prevBtn  = document.getElementById('prev');
 const nextBtn  = document.getElementById('next');
 const dotsBox  = document.getElementById('dots');
 const roomEls  = document.querySelectorAll('.room');
+const entranceEl = document.getElementById('entrance');
+const enterBtn   = document.getElementById('enter-btn');
 
 /* ═══════════ INIT ═══════════ */
 function init() {
@@ -54,6 +56,12 @@ function init() {
 
   window.addEventListener('resize', onResize);
   document.addEventListener('keydown', onKey);
+
+  /* Entrance gate — videos load behind it */
+  enterBtn.addEventListener('click', () => {
+    entranceEl.classList.add('gone');
+    document.body.classList.add('entered');
+  });
 
   setRoom(0, false);
   setTimeout(() => loader.classList.add('gone'), 900);

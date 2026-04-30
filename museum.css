@@ -205,10 +205,7 @@ html,body{
   width:100%;height:100%;border:none;
   pointer-events:none;
   display:block;
-  opacity:0;
-  animation:iframe-in .6s ease 2s forwards;
 }
-@keyframes iframe-in{to{opacity:1}}
 .screen-shield{
   position:absolute;inset:0;z-index:2;
 }
@@ -292,6 +289,7 @@ html,body{
 #nav{
   position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);
   z-index:200;
+  transition:opacity .5s ease .4s;
   display:flex;align-items:center;gap:.6rem;
   background:rgba(5,5,5,.55);backdrop-filter:blur(20px);
   border:1px solid var(--border);border-radius:100px;
@@ -322,6 +320,7 @@ html,body{
 #rlabel{
   position:fixed;top:1.6rem;left:50%;transform:translateX(-50%);
   z-index:200;
+  transition:opacity .5s ease .4s;
   font-family:var(--mono);font-size:.55rem;
   letter-spacing:.14em;text-transform:uppercase;
   color:rgba(255,255,255,.2);
@@ -340,6 +339,68 @@ html,body{
   transition:all .2s;
 }
 #back:hover{color:#fff;border-color:rgba(255,255,255,.2)}
+
+/* ═══════════════════════════════════
+   ENTRANCE
+   ═══════════════════════════════════ */
+#entrance{
+  position:fixed;inset:0;z-index:500;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at center,rgba(5,5,5,.6) 0%,rgba(5,5,5,.92) 100%);
+  transition:opacity 1s ease,visibility 1s ease;
+}
+#entrance.gone{opacity:0;visibility:hidden;pointer-events:none}
+
+.ent-content{text-align:center}
+.ent-content > *{
+  opacity:0;transform:translateY(15px);
+  animation:ent-in .7s ease forwards;
+}
+.ent-content > :nth-child(1){animation-delay:1s}
+.ent-content > :nth-child(2){animation-delay:1.3s}
+.ent-content > :nth-child(3){animation-delay:1.6s}
+.ent-content > :nth-child(4){animation-delay:2s}
+@keyframes ent-in{to{opacity:1;transform:translateY(0)}}
+
+.ent-pre{
+  font-family:var(--mono);font-size:.6rem;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:rgba(255,255,255,.2);margin-bottom:.8rem;
+}
+.ent-title{
+  font-size:clamp(3rem,8vw,6rem);
+  font-weight:900;line-height:.9;
+  letter-spacing:-.04em;margin-bottom:1rem;
+}
+.ent-grad{
+  background-image:linear-gradient(135deg,#818cf8,#38bdf8,#c084fc);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.ent-sub{
+  font-size:.85rem;color:var(--dim);
+  margin-bottom:2.5rem;
+}
+.ent-btn{
+  font-family:var(--sans);font-size:.8rem;font-weight:600;
+  letter-spacing:.06em;
+  padding:.8rem 2.5rem;border-radius:100px;
+  border:1px solid rgba(129,140,248,.3);
+  background:rgba(99,102,241,.1);
+  color:var(--text);cursor:pointer;
+  transition:all .3s ease;
+}
+.ent-btn:hover{
+  background:rgba(99,102,241,.2);
+  border-color:rgba(129,140,248,.5);
+  box-shadow:0 0 30px rgba(99,102,241,.15);
+  transform:scale(1.03);
+}
+
+/* Hide museum UI until entrance is dismissed */
+body:not(.entered) #nav,
+body:not(.entered) #rlabel,
+body:not(.entered) #back{opacity:0;pointer-events:none}
 
 /* ── Responsive ── */
 @media(max-width:900px){
