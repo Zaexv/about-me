@@ -1,7 +1,17 @@
-/* ═══════════════════════════════════════════════════
-   3D Museum — v4 (fresh rebuild)
-   Three.js particle atmosphere + HTML room overlays
-   ═══════════════════════════════════════════════════ */
+/**
+ * 3D Museum — Interactive Project Showcase
+ *
+ * Three.js particle atmosphere with HTML room overlays.
+ * Each room has themed colors, sparkle particles, and floating shapes.
+ *
+ * Architecture:
+ *   - Canvas (z-index 1): Three.js scene with particles, lights, shapes
+ *   - HTML   (z-index 10): Room content overlays (pointer-events: none)
+ *   - Nav    (z-index 200): Navigation controls
+ *
+ * @author Eduardo Pertierra Puche
+ * @version 2.0.0
+ */
 
 const ROOMS = [
   { name: 'Entrance',              color: [0.45, 0.50, 0.95], fog: 0x020208, light: 0x6366f1, flash: 'rgba(99,102,241,0.2)' },

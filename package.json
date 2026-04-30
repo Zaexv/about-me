@@ -1,12 +1,12 @@
 {
   "name": "about-me",
-  "version": "1.0.0",
-  "description": "Personal portfolio with 3D shader background",
+  "version": "2.0.0",
+  "description": "Personal portfolio & interactive 3D Museum — built with Three.js, custom shaders, and vanilla web technologies.",
   "main": "index.html",
   "scripts": {
-    "start": "npx http-server -p 8000 -o",
-    "serve": "npx http-server -p 8000",
-    "dev": "npx live-server --port=8000",
+    "start": "npx http-server -p 8080 -c-1 -o",
+    "serve": "npx http-server -p 8080 -c-1",
+    "dev": "npx live-server --port=8080",
     "lint": "eslint js/",
     "lint:fix": "eslint js/ --fix",
     "typecheck": "tsc --noEmit",
@@ -16,7 +16,9 @@
     "portfolio",
     "threejs",
     "shader",
-    "3d"
+    "3d-museum",
+    "webgl",
+    "particles"
   ],
   "author": "Eduardo Pertierra Puche",
   "license": "MIT",
