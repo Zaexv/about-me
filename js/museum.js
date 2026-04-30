@@ -60,6 +60,21 @@ function init() {
   tick();
 }
 
+/* Soft circular sprite (matches main-page radial-gradient particles) */
+function createDotTexture() {
+  const c = document.createElement('canvas');
+  c.width = 64; c.height = 64;
+  const ctx = c.getContext('2d');
+  const g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+  g.addColorStop(0, 'rgba(255,255,255,1)');
+  g.addColorStop(0.15, 'rgba(255,255,255,0.8)');
+  g.addColorStop(0.4, 'rgba(255,255,255,0.25)');
+  g.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, 64, 64);
+  return new THREE.CanvasTexture(c);
+}
+
 /* ═══════════ PARTICLES ═══════════ */
 function buildParticles() {
   const N = 3000;
@@ -82,7 +97,8 @@ function buildParticles() {
   dustGeo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
 
   const mat = new THREE.PointsMaterial({
-    size: 0.12,
+    size: 0.25,
+    map: createDotTexture(),
     vertexColors: true,
     transparent: true,
     opacity: 0.55,
