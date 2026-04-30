@@ -8,42 +8,157 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="museum.css">
+  <link rel="stylesheet" href="museum.css?v=4">
 </head>
 <body>
 
   <!-- Loading -->
-  <div id="loading-screen">
-    <div class="loader-col">
-      <div class="loader-ring"></div>
-      <p>Entering the museum…</p>
-    </div>
+  <div id="loader">
+    <div class="ld-col"><div class="ld-ring"></div><p>Entering the museum…</p></div>
   </div>
 
-  <!-- CSS3D layer (renders behind WebGL) -->
-  <div id="css3d-container"></div>
+  <!-- 3D atmosphere (particles + lights) -->
+  <canvas id="c3d"></canvas>
 
-  <!-- WebGL layer (transparent, renders on top) -->
-  <canvas id="museum-canvas"></canvas>
+  <!-- Flash -->
+  <div id="flash"></div>
 
-  <!-- Room transition flash -->
-  <div id="room-flash"></div>
+  <!-- ═══ ROOMS ═══ -->
+  <div id="rooms">
 
-  <!-- Navigation UI (only non-3D elements) -->
-  <nav id="museum-nav">
-    <button id="nav-prev" class="nav-arrow" disabled aria-label="Previous">
+    <!-- Room 0 — Promptcraft -->
+    <section class="room active" data-idx="0">
+      <div class="r-inner">
+        <div class="r-info">
+          <span class="r-tag">⚔️ Multi-Agent RPG</span>
+          <h1 class="r-title">World of<br><em class="grad grad-fire">Promptcraft</em></h1>
+          <p class="r-desc">A 3D multiplayer RPG where <strong>your words shape the world</strong>. Every NPC is a fully autonomous LangGraph agent with its own personality, memory, and decision-making graph.</p>
+          <div class="r-stack"><span>Three.js</span><span>TypeScript</span><span>LangGraph</span><span>FastAPI</span><span>GPT-4o</span><span>WebSocket</span><span>RAG</span></div>
+          <div class="r-links">
+            <a href="https://github.com/Zaexv/world-of-prompcraft" target="_blank" rel="noopener" class="r-btn">GitHub →</a>
+          </div>
+        </div>
+        <div class="r-exhibit">
+          <div class="r-screen glow-fire">
+            <iframe src="https://www.youtube.com/embed/TdmNPD9wOhA?autoplay=1&mute=1&loop=1&playlist=TdmNPD9wOhA&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1" allow="autoplay; encrypted-media" loading="lazy"></iframe>
+            <div class="screen-shield"></div>
+          </div>
+          <div class="r-arch">
+            <div class="arch-h">Architecture</div>
+            <div class="a-n a-ui">🎮 Three.js Client<small>Terrain · NPCs · Chat</small></div>
+            <div class="a-a">⇅ WebSocket</div>
+            <div class="a-n a-api">🧠 FastAPI + LangGraph<small>Per-NPC StateGraph</small></div>
+            <div class="a-a">↓</div>
+            <div class="a-r"><span>Reason</span><span>Act</span><span>Respond</span></div>
+            <div class="a-a">↓</div>
+            <div class="a-r"><span>🤖 GPT-4o</span><span>📚 RAG Lore</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Room 1 — SpAIce -->
+    <section class="room" data-idx="1">
+      <div class="r-inner">
+        <div class="r-info">
+          <span class="r-tag">🛸 Live · 4k+ views/mo</span>
+          <h1 class="r-title">SpAIce<br><em class="grad grad-cosmic">Odyssey</em></h1>
+          <p class="r-desc">Explore <strong>6,000+ real NASA exoplanets</strong> in 3D. AI-generated planet narratives, text-to-speech narration, and spacecraft simulation. Hamburg AI Hackathon.</p>
+          <div class="r-stack"><span>Three.js</span><span>NASA API</span><span>OpenAI GPT-4</span><span>TTS</span><span>Clustering</span><span>Vite</span></div>
+          <div class="r-links">
+            <a href="https://agentic-space-exploration.pages.dev/" target="_blank" rel="noopener" class="r-btn r-btn--pri">Live Demo →</a>
+            <a href="https://github.com/Zaexv/spaice-agentic-3d-exploration" target="_blank" rel="noopener" class="r-btn">GitHub →</a>
+          </div>
+        </div>
+        <div class="r-exhibit">
+          <div class="r-screen glow-cosmic">
+            <iframe src="https://www.youtube.com/embed/ZdC-fMK62Fg?autoplay=1&mute=1&loop=1&playlist=ZdC-fMK62Fg&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1" allow="autoplay; encrypted-media" loading="lazy"></iframe>
+            <div class="screen-shield"></div>
+          </div>
+          <div class="r-arch">
+            <div class="arch-h">Architecture</div>
+            <div class="a-n a-ui">🖥️ Three.js Frontend<small>3D Scene · Spacecraft</small></div>
+            <div class="a-a">↕ REST + Stream</div>
+            <div class="a-row-flex">
+              <div class="a-n a-data">📊 NASA<small>6k+ planets</small></div>
+              <div class="a-n a-ai">🤖 OpenAI<small>Narratives</small></div>
+            </div>
+            <div class="a-a">↓</div>
+            <div class="a-r"><span>🔊 TTS</span><span>🗺️ Star Map</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Room 2 — Digital Twin -->
+    <section class="room" data-idx="2">
+      <div class="r-inner">
+        <div class="r-info">
+          <span class="r-tag">🧠 AI Agents · RAG · Production</span>
+          <h1 class="r-title">AI Digital<br><em class="grad grad-neural">Twin</em></h1>
+          <p class="r-desc">Production-ready multi-agent orchestration with <strong>5 specialized agents</strong> and LLM-based semantic routing at 95% accuracy. RAG over personal data with persistent conversations.</p>
+          <div class="r-stack"><span>LangChain</span><span>LangGraph</span><span>FastAPI</span><span>React</span><span>ChromaDB</span><span>SQLite</span><span>Docker</span></div>
+          <div class="r-links">
+            <a href="https://github.com/Zaexv/agentic-orchestration-app" target="_blank" rel="noopener" class="r-btn">GitHub →</a>
+          </div>
+        </div>
+        <div class="r-exhibit">
+          <div class="r-arch r-arch--wide">
+            <div class="arch-h">Architecture</div>
+            <div class="a-n a-ui">🎨 React + 3D Avatars</div>
+            <div class="a-a">↓</div>
+            <div class="a-n a-api">🧠 Router Agent<small>GPT-4o-mini · 95% accuracy</small></div>
+            <div class="a-a">↓ Semantic Routing</div>
+            <div class="a-r"><span>👔 Pro</span><span>😄 Social</span><span>📚 Know</span><span>⚖️ Dec</span><span>🤖 Gen</span></div>
+            <div class="a-a">↓</div>
+            <div class="a-r"><span>ChromaDB</span><span>SQLite</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Room 3 — PlanItNow -->
+    <section class="room" data-idx="3">
+      <div class="r-inner">
+        <div class="r-info">
+          <span class="r-tag">📍 Startup · Distributed Systems</span>
+          <h1 class="r-title">PlanIt<br><em class="grad grad-urban">Now</em></h1>
+          <p class="r-desc">Geolocation-based social planning for <strong>high-concurrency scaling</strong>. End-to-end distributed architecture supporting millions of social interactions in real time.</p>
+          <div class="r-stack"><span>Python</span><span>Django</span><span>GCP</span><span>PostgreSQL</span><span>Redis</span><span>Geolocation API</span></div>
+          <div class="r-links">
+            <a href="https://github.com/Zaexv/PlanItNow_Backend" target="_blank" rel="noopener" class="r-btn">Backend →</a>
+            <a href="https://github.com/Zaexv/PlanItNow_frontend_old" target="_blank" rel="noopener" class="r-btn">Frontend →</a>
+          </div>
+        </div>
+        <div class="r-exhibit">
+          <div class="r-arch r-arch--wide">
+            <div class="arch-h">Architecture</div>
+            <div class="a-n a-ui">📱 Mobile &amp; Web</div>
+            <div class="a-a">↓</div>
+            <div class="a-n a-api">🐍 Django REST<small>GCP Cloud Run</small></div>
+            <div class="a-a">↓</div>
+            <div class="a-r"><span>🗄️ Postgres</span><span>⚡ Redis</span><span>📍 Geo API</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Nav -->
+  <nav id="nav">
+    <button id="prev" class="nbtn" disabled aria-label="Previous">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
     </button>
-    <div id="nav-dots"></div>
-    <button id="nav-next" class="nav-arrow" aria-label="Next">
+    <div id="dots"></div>
+    <button id="next" class="nbtn" aria-label="Next">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
     </button>
   </nav>
-  <div id="room-label"></div>
-  <a href="index.html" id="back-link">← Portfolio</a>
+  <div id="rlabel"></div>
+  <a href="index.html" id="back">← Portfolio</a>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/renderers/CSS3DRenderer.js"></script>
-  <script src="js/museum.js"></script>
+  <script src="js/museum.js?v=4"></script>
 </body>
 </html>
