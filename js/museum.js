@@ -1,537 +1,568 @@
-/* ═══════════════════════════════════════════
-   3D Museum — Dual Renderer (WebGL + CSS3D)
-   Videos embedded as 3D screens in the scene
-   ═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   3D Museum — Full 3D Experience
+   WebGL: rooms, particles, lighting, fog
+   CSS3D: YouTube videos on walls, floating text panels
+   ═══════════════════════════════════════════════════════ */
 
-/* ── Room config ── */
+/* ── Room data ── */
 const ROOMS = [
   {
     name: 'World of Promptcraft',
+    tag: '⚔️ MULTI-AGENT RPG',
+    titleHTML: 'World of<br><em>Promptcraft</em>',
+    desc: 'A 3D multiplayer RPG where <strong>your words shape the world</strong>. Every NPC is a fully autonomous LangGraph agent with its own personality, memory, and decision-making graph.',
+    stack: ['Three.js', 'TypeScript', 'LangGraph', 'FastAPI', 'GPT-4o', 'WebSocket', 'RAG'],
     videoId: 'TdmNPD9wOhA',
+    links: [{ text: 'GitHub →', url: 'https://github.com/Zaexv/world-of-prompcraft' }],
+    archHTML: '<div class="an n-ui">🎮 Three.js Client<small>Terrain · NPCs · Chat</small></div><div class="aa">⇅ WebSocket</div><div class="an n-api">🧠 FastAPI + LangGraph<small>Per-NPC StateGraph</small></div><div class="aa">↓</div><div class="ar"><span>Reason</span><span>Act</span><span>Respond</span></div><div class="aa">↓</div><div class="ar"><span>🤖 GPT-4o</span><span>📚 RAG Lore</span></div>',
     fog: 0x0a0500,
-    accent: new THREE.Color(0xfb923c),
-    particleColor: new THREE.Color(0xfb923c),
+    particleRGB: [0.98, 0.57, 0.24],
     spotColor: 0xff6622,
-    wallColor: 0x1a0800
+    wallColor: 0x120600,
+    accentGrad: 'linear-gradient(135deg, #fb923c, #ef4444, #f59e0b)',
+    flashColor: 'rgba(251,146,60,0.25)'
   },
   {
     name: 'SpAIce — Space Odyssey',
+    tag: '🛸 LIVE · 4K+ VIEWS/MO',
+    titleHTML: 'SpAIce<br><em>Odyssey</em>',
+    desc: 'Explore <strong>6,000+ real NASA exoplanets</strong> in 3D. AI-generated planet narratives, text-to-speech, and spacecraft simulation. Hamburg AI Hackathon.',
+    stack: ['Three.js', 'NASA API', 'OpenAI GPT-4', 'TTS', 'Spatial Clustering', 'Vite'],
     videoId: 'ZdC-fMK62Fg',
+    links: [
+      { text: 'Live Demo →', url: 'https://agentic-space-exploration.pages.dev/', primary: true },
+      { text: 'GitHub →', url: 'https://github.com/Zaexv/spaice-agentic-3d-exploration' }
+    ],
+    archHTML: '<div class="an n-ui">🖥️ Three.js Frontend<small>3D Scene · Spacecraft</small></div><div class="aa">↕ REST + Stream</div><div class="ar-nodes"><div class="an n-data">📊 NASA<small>6k+ planets</small></div><div class="an n-ai">🤖 OpenAI<small>Narratives</small></div></div><div class="aa">↓</div><div class="ar"><span>🔊 TTS</span><span>🗺️ Star Map</span></div>',
     fog: 0x02020c,
-    accent: new THREE.Color(0x818cf8),
-    particleColor: new THREE.Color(0x6366f1),
+    particleRGB: [0.39, 0.4, 0.95],
     spotColor: 0x6366f1,
-    wallColor: 0x0a0a1a
+    wallColor: 0x080818,
+    accentGrad: 'linear-gradient(135deg, #818cf8, #38bdf8, #c084fc)',
+    flashColor: 'rgba(99,102,241,0.25)'
   },
   {
     name: 'AI Digital Twin',
+    tag: '🧠 AI AGENTS · RAG · PRODUCTION',
+    titleHTML: 'AI Digital<br><em>Twin</em>',
+    desc: 'Production-ready multi-agent orchestration with <strong>5 specialized agents</strong> and LLM-based semantic routing at 95% accuracy. RAG over personal data.',
+    stack: ['LangChain', 'LangGraph', 'FastAPI', 'React', 'ChromaDB', 'SQLite', 'Docker'],
     videoId: null,
+    links: [{ text: 'GitHub →', url: 'https://github.com/Zaexv/agentic-orchestration-app' }],
+    archHTML: '<div class="an n-ui">🎨 React + 3D Avatars</div><div class="aa">↓</div><div class="an n-api">🧠 Router Agent<small>GPT-4o-mini · 95% accuracy</small></div><div class="aa">↓ Semantic Routing</div><div class="ar"><span>👔 Pro</span><span>😄 Social</span><span>📚 Know</span><span>⚖️ Dec</span><span>🤖 Gen</span></div><div class="aa">↓</div><div class="ar"><span>ChromaDB</span><span>SQLite</span></div>',
     fog: 0x010805,
-    accent: new THREE.Color(0x22c55e),
-    particleColor: new THREE.Color(0x4ade80),
+    particleRGB: [0.29, 0.77, 0.37],
     spotColor: 0x22c55e,
-    wallColor: 0x081a10
+    wallColor: 0x061210,
+    accentGrad: 'linear-gradient(135deg, #4ade80, #22c55e, #34d399)',
+    flashColor: 'rgba(34,197,94,0.25)'
   },
   {
     name: 'PlanItNow',
+    tag: '📍 STARTUP · DISTRIBUTED SYSTEMS',
+    titleHTML: 'PlanIt<br><em>Now</em>',
+    desc: 'Geolocation-based social planning for <strong>high-concurrency scaling</strong>. End-to-end distributed architecture supporting millions of social interactions in real time.',
+    stack: ['Python', 'Django', 'GCP', 'PostgreSQL', 'Redis', 'Geolocation API'],
     videoId: null,
+    links: [
+      { text: 'Backend →', url: 'https://github.com/Zaexv/PlanItNow_Backend' },
+      { text: 'Frontend →', url: 'https://github.com/Zaexv/PlanItNow_frontend_old' }
+    ],
+    archHTML: '<div class="an n-ui">📱 Mobile &amp; Web</div><div class="aa">↓</div><div class="an n-api">🐍 Django REST<small>GCP Cloud Run</small></div><div class="aa">↓</div><div class="ar"><span>🗄️ Postgres</span><span>⚡ Redis</span><span>📍 Geo API</span></div>',
     fog: 0x080210,
-    accent: new THREE.Color(0xa855f7),
-    particleColor: new THREE.Color(0xc084fc),
+    particleRGB: [0.66, 0.33, 0.97],
     spotColor: 0xa855f7,
-    wallColor: 0x140828
+    wallColor: 0x100620,
+    accentGrad: 'linear-gradient(135deg, #c084fc, #a855f7, #ec4899)',
+    flashColor: 'rgba(168,85,247,0.25)'
   }
 ];
 
-const ROOM_SPACING = 60;
+/* ── Constants ── */
+const ROOM_SPACING = 28;
 const ROOM_COUNT = ROOMS.length;
-let currentRoom = 0;
-let isTransitioning = false;
+const SCALE = 0.02;
+const SCREEN_PX = [800, 450];
+const SCREEN_3D = [SCREEN_PX[0] * SCALE, SCREEN_PX[1] * SCALE]; // 16 x 9
 
-/* ── Three.js globals ── */
-let camera, webglRenderer, cssRenderer;
-let scene, cssScene;
-let dustParticles, dustGeo;
-let ambientLight;
-const spotlights = [];
+/* ── State ── */
+let currentRoom = 0;
+let transitioning = false;
+let camTargetZ = null;
+
+/* ── Three.js refs ── */
+let camera, glRenderer, cssRenderer, glScene, cssScene;
+let dustGeo;
 const clock = new THREE.Clock();
 
-/* ── DOM refs ── */
+/* per-room CSS3D DOM elements for fading */
+const roomElements = [];
+
+/* ── DOM ── */
 const canvas = document.getElementById('museum-canvas');
-const css3dContainer = document.getElementById('css3d-container');
+const css3dBox = document.getElementById('css3d-container');
 const flash = document.getElementById('room-flash');
-const loadingScreen = document.getElementById('loading-screen');
-const roomLabel = document.getElementById('room-label');
-const navPrev = document.getElementById('nav-prev');
-const navNext = document.getElementById('nav-next');
-const navDots = document.getElementById('nav-dots');
-const roomInfos = document.querySelectorAll('.room-info');
+const loader = document.getElementById('loading-screen');
+const label = document.getElementById('room-label');
+const btnPrev = document.getElementById('nav-prev');
+const btnNext = document.getElementById('nav-next');
+const dots = document.getElementById('nav-dots');
 
-/* ════════════════════════════
+/* ═══════════════════════════════════
    INIT
-   ════════════════════════════ */
+   ═══════════════════════════════════ */
 function init() {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+
   /* Camera */
-  camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 500);
-  camera.position.set(0, 4, 18);
-  camera.lookAt(0, 3, 0);
+  camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 500);
+  camera.position.set(0, 4.5, 10);
 
-  /* ── WebGL scene ── */
-  scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(ROOMS[0].fog, 0.018);
+  /* WebGL */
+  glScene = new THREE.Scene();
+  glScene.fog = new THREE.FogExp2(ROOMS[0].fog, 0.02);
 
-  webglRenderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-  webglRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  webglRenderer.setSize(window.innerWidth, window.innerHeight);
-  webglRenderer.setClearColor(0x000000, 0);
-  webglRenderer.shadowMap.enabled = true;
+  glRenderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  glRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  glRenderer.setSize(w, h);
+  glRenderer.setClearColor(0x000000, 0);
 
-  /* ── CSS3D scene ── */
+  /* CSS3D */
   cssScene = new THREE.Scene();
   cssRenderer = new THREE.CSS3DRenderer();
-  cssRenderer.setSize(window.innerWidth, window.innerHeight);
-  cssRenderer.domElement.style.position = 'fixed';
-  cssRenderer.domElement.style.top = '0';
-  cssRenderer.domElement.style.left = '0';
-  cssRenderer.domElement.style.pointerEvents = 'none';
-  css3dContainer.appendChild(cssRenderer.domElement);
+  cssRenderer.setSize(w, h);
+  const cssDom = cssRenderer.domElement;
+  cssDom.style.position = 'fixed';
+  cssDom.style.top = '0';
+  cssDom.style.left = '0';
+  cssDom.style.background = '#030303';
+  css3dBox.appendChild(cssDom);
 
   /* Build */
-  buildLighting();
-  buildRooms();
-  buildDust();
-  buildNav();
+  addLights();
+  addRoomGeometry();
+  addCSS3DContent();
+  addDust();
+  addNav();
 
   /* Events */
   window.addEventListener('resize', onResize);
   document.addEventListener('keydown', onKey);
 
   /* Start */
-  setActiveRoom(0, false);
-
-  setTimeout(() => {
-    loadingScreen.classList.add('hidden');
-  }, 1200);
-
-  animate();
+  setRoom(0, false);
+  setTimeout(() => loader.classList.add('hidden'), 1200);
+  tick();
 }
 
-/* ════════════════════════════
+/* ═══════════════════════════════════
    LIGHTING
-   ════════════════════════════ */
-function buildLighting() {
-  ambientLight = new THREE.AmbientLight(0x111111, 0.6);
-  scene.add(ambientLight);
+   ═══════════════════════════════════ */
+function addLights() {
+  glScene.add(new THREE.AmbientLight(0x111111, 0.4));
 
-  ROOMS.forEach((room, i) => {
-    const z = -i * ROOM_SPACING;
+  ROOMS.forEach((r, i) => {
+    const cz = -i * ROOM_SPACING;
 
-    /* Main spot from above-front, pointing at the screen area */
-    const spot = new THREE.SpotLight(room.spotColor, 1.8, 80, Math.PI / 4, 0.5, 1.2);
-    spot.position.set(0, 14, z + 10);
-    spot.target.position.set(0, 3, z - 5);
-    scene.add(spot);
-    scene.add(spot.target);
-    spotlights.push(spot);
+    /* Main spotlight from above */
+    const spot = new THREE.SpotLight(r.spotColor, 2.2, 45, Math.PI / 3.5, 0.6, 1);
+    spot.position.set(0, 11, cz + 6);
+    spot.target.position.set(0, 3, cz - 5);
+    glScene.add(spot);
+    glScene.add(spot.target);
 
-    /* Accent point light near ground */
-    const point = new THREE.PointLight(room.spotColor, 0.5, 30, 2);
-    point.position.set(-8, 1, z);
-    scene.add(point);
+    /* Accent point light left-low */
+    const pl = new THREE.PointLight(r.spotColor, 0.5, 18, 2);
+    pl.position.set(-6, 1.5, cz - 2);
+    glScene.add(pl);
+
+    /* Back glow behind screen */
+    const pb = new THREE.PointLight(r.spotColor, 0.35, 12, 2);
+    pb.position.set(0, 5.5, cz - 11);
+    glScene.add(pb);
   });
 }
 
-/* ════════════════════════════
-   ROOMS — geometry + video screens
-   ════════════════════════════ */
-function buildRooms() {
-  const floorMat = new THREE.MeshStandardMaterial({
-    color: 0x080808,
-    roughness: 0.8,
-    metalness: 0.3
-  });
-  const ceilingMat = new THREE.MeshStandardMaterial({
-    color: 0x050505,
-    roughness: 1,
-    metalness: 0
-  });
+/* ═══════════════════════════════════
+   ROOM GEOMETRY (WebGL)
+   ═══════════════════════════════════ */
+function addRoomGeometry() {
+  const floorMat = new THREE.MeshStandardMaterial({ color: 0x060606, roughness: 0.85, metalness: 0.15 });
+  const ceilMat = new THREE.MeshStandardMaterial({ color: 0x040404, roughness: 1, metalness: 0 });
 
-  ROOMS.forEach((room, i) => {
-    const z = -i * ROOM_SPACING;
-    const wallMat = new THREE.MeshStandardMaterial({ color: room.wallColor, roughness: 0.9 });
+  ROOMS.forEach((r, i) => {
+    const cz = -i * ROOM_SPACING;
+    const wMat = new THREE.MeshStandardMaterial({ color: r.wallColor, roughness: 0.9, metalness: 0.1 });
 
     /* Floor */
-    const floor = new THREE.Mesh(new THREE.PlaneGeometry(50, 60), floorMat);
-    floor.rotation.x = -Math.PI / 2;
-    floor.position.set(0, 0, z);
-    floor.receiveShadow = true;
-    scene.add(floor);
+    const fl = new THREE.Mesh(new THREE.PlaneGeometry(28, 28), floorMat);
+    fl.rotation.x = -Math.PI / 2;
+    fl.position.set(0, 0, cz);
+    fl.receiveShadow = true;
+    glScene.add(fl);
 
     /* Ceiling */
-    const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(50, 60), ceilingMat);
-    ceiling.rotation.x = Math.PI / 2;
-    ceiling.position.set(0, 16, z);
-    scene.add(ceiling);
+    const ce = new THREE.Mesh(new THREE.PlaneGeometry(28, 28), ceilMat);
+    ce.rotation.x = Math.PI / 2;
+    ce.position.set(0, 11, cz);
+    glScene.add(ce);
 
-    /* Left wall */
-    const lWall = new THREE.Mesh(new THREE.PlaneGeometry(60, 16), wallMat);
-    lWall.rotation.y = Math.PI / 2;
-    lWall.position.set(-25, 8, z);
-    scene.add(lWall);
+    /* Walls (left, right) */
+    const lw = new THREE.Mesh(new THREE.PlaneGeometry(28, 11), wMat);
+    lw.rotation.y = Math.PI / 2;
+    lw.position.set(-14, 5.5, cz);
+    glScene.add(lw);
 
-    /* Right wall */
-    const rWall = new THREE.Mesh(new THREE.PlaneGeometry(60, 16), wallMat);
-    rWall.rotation.y = -Math.PI / 2;
-    rWall.position.set(25, 8, z);
-    scene.add(rWall);
+    const rw = new THREE.Mesh(new THREE.PlaneGeometry(28, 11), wMat);
+    rw.rotation.y = -Math.PI / 2;
+    rw.position.set(14, 5.5, cz);
+    glScene.add(rw);
 
-    /* Back wall — build around screen hole if video exists */
-    if (room.videoId) {
-      buildScreenWall(room, z, wallMat);
-      buildVideoScreen(room, z);
+    /* Back wall */
+    const bz = cz - 14;
+    if (r.videoId) {
+      addScreenWall(r, bz, wMat);
     } else {
-      /* Solid back wall */
-      const bWall = new THREE.Mesh(new THREE.PlaneGeometry(50, 16), wallMat);
-      bWall.position.set(0, 8, z - 30);
-      scene.add(bWall);
-
-      /* Glowing orb for non-video rooms */
-      buildGlowOrb(room, z);
+      const bw = new THREE.Mesh(new THREE.PlaneGeometry(28, 11), wMat);
+      bw.position.set(0, 5.5, bz);
+      glScene.add(bw);
+      addOrb(r, cz);
     }
 
-    /* Screen frame glow (floor line) */
-    const glowLine = new THREE.Mesh(
-      new THREE.PlaneGeometry(20, 0.05),
-      new THREE.MeshBasicMaterial({ color: room.spotColor, transparent: true, opacity: 0.4 })
-    );
-    glowLine.rotation.x = -Math.PI / 2;
-    glowLine.position.set(0, 0.01, z - 10);
-    scene.add(glowLine);
+    /* Floor accent line */
+    const lineMat = new THREE.MeshBasicMaterial({
+      color: r.spotColor, transparent: true, opacity: 0.3
+    });
+    const line = new THREE.Mesh(new THREE.PlaneGeometry(10, 0.04), lineMat);
+    line.rotation.x = -Math.PI / 2;
+    line.position.set(0, 0.01, cz - 4);
+    glScene.add(line);
   });
 }
 
-/* Build back wall with a rectangular hole for the video screen */
-function buildScreenWall(room, z, wallMat) {
-  const screenW = 19.2;
-  const screenH = 10.8;
-  const screenY = 6.5;
-  const wallW = 50;
-  const wallH = 16;
+/* Back wall with screen cutout */
+function addScreenWall(r, bz, wMat) {
+  const sw = SCREEN_3D[0]; // 16
+  const sh = SCREEN_3D[1]; // 9
+  const sy = 5.5;
+  const W = 28;
+  const H = 11;
 
-  /* We build 4 wall segments around the screen opening */
-  /* Bottom strip */
-  const bH = screenY - screenH / 2;
-  if (bH > 0) {
-    const bottom = new THREE.Mesh(new THREE.PlaneGeometry(wallW, bH), wallMat);
-    bottom.position.set(0, bH / 2, z - 30);
-    scene.add(bottom);
+  /* Bottom */
+  const bh = sy - sh / 2;
+  if (bh > 0) {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(W, bh), wMat);
+    m.position.set(0, bh / 2, bz);
+    glScene.add(m);
   }
-
-  /* Top strip */
-  const topY = screenY + screenH / 2;
-  const tH = wallH - topY;
-  if (tH > 0) {
-    const top = new THREE.Mesh(new THREE.PlaneGeometry(wallW, tH), wallMat);
-    top.position.set(0, topY + tH / 2, z - 30);
-    scene.add(top);
+  /* Top */
+  const tTop = sy + sh / 2;
+  const th = H - tTop;
+  if (th > 0) {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(W, th), wMat);
+    m.position.set(0, tTop + th / 2, bz);
+    glScene.add(m);
   }
+  /* Left */
+  const lw = (W - sw) / 2;
+  const ml = new THREE.Mesh(new THREE.PlaneGeometry(lw, sh), wMat);
+  ml.position.set(-(sw / 2 + lw / 2), sy, bz);
+  glScene.add(ml);
+  /* Right */
+  const mr = new THREE.Mesh(new THREE.PlaneGeometry(lw, sh), wMat);
+  mr.position.set(sw / 2 + lw / 2, sy, bz);
+  glScene.add(mr);
 
-  /* Left strip */
-  const lW = (wallW - screenW) / 2;
-  const mH = screenH;
-  const left = new THREE.Mesh(new THREE.PlaneGeometry(lW, mH), wallMat);
-  left.position.set(-(screenW / 2 + lW / 2), screenY, z - 30);
-  scene.add(left);
-
-  /* Right strip */
-  const right = new THREE.Mesh(new THREE.PlaneGeometry(lW, mH), wallMat);
-  right.position.set(screenW / 2 + lW / 2, screenY, z - 30);
-  scene.add(right);
-
-  /* Screen frame (thin emissive border) */
-  const frameMat = new THREE.MeshBasicMaterial({ color: room.spotColor, transparent: true, opacity: 0.3 });
-  const frameThick = 0.15;
-  const topFrame = new THREE.Mesh(new THREE.BoxGeometry(screenW + 0.4, frameThick, 0.1), frameMat);
-  topFrame.position.set(0, screenY + screenH / 2 + frameThick / 2, z - 29.95);
-  scene.add(topFrame);
-
-  const botFrame = new THREE.Mesh(new THREE.BoxGeometry(screenW + 0.4, frameThick, 0.1), frameMat);
-  botFrame.position.set(0, screenY - screenH / 2 - frameThick / 2, z - 29.95);
-  scene.add(botFrame);
-
-  const leftFrame = new THREE.Mesh(new THREE.BoxGeometry(frameThick, screenH + 0.4, 0.1), frameMat);
-  leftFrame.position.set(-screenW / 2 - frameThick / 2, screenY, z - 29.95);
-  scene.add(leftFrame);
-
-  const rightFrame = new THREE.Mesh(new THREE.BoxGeometry(frameThick, screenH + 0.4, 0.1), frameMat);
-  rightFrame.position.set(screenW / 2 + frameThick / 2, screenY, z - 29.95);
-  scene.add(rightFrame);
+  /* Glowing frame */
+  const fMat = new THREE.MeshBasicMaterial({
+    color: r.spotColor, transparent: true, opacity: 0.4
+  });
+  const ft = 0.12;
+  [
+    [0, sy + sh / 2 + ft / 2, sw + 0.3, ft],
+    [0, sy - sh / 2 - ft / 2, sw + 0.3, ft],
+    [-(sw / 2 + ft / 2), sy, ft, sh + 0.3],
+    [sw / 2 + ft / 2, sy, ft, sh + 0.3]
+  ].forEach(([x, y, w2, h2]) => {
+    const f = new THREE.Mesh(new THREE.BoxGeometry(w2, h2, 0.06), fMat);
+    f.position.set(x, y, bz + 0.04);
+    glScene.add(f);
+  });
 }
 
-/* Place a YouTube iframe as a CSS3DObject at the screen position */
-function buildVideoScreen(room, z) {
-  const screenW = 19.2;
-  const screenH = 10.8;
-  const screenY = 6.5;
+/* Wireframe orb for non-video rooms */
+function addOrb(r, cz) {
+  const orb = new THREE.Mesh(
+    new THREE.IcosahedronGeometry(2.2, 1),
+    new THREE.MeshBasicMaterial({ color: r.spotColor, wireframe: true, transparent: true, opacity: 0.15 })
+  );
+  orb.position.set(6, 5, cz - 8);
+  orb.userData = { orb: true, baseY: 5 };
+  glScene.add(orb);
 
-  /* Create iframe element */
-  const iframe = document.createElement('iframe');
-  iframe.src = `https://www.youtube.com/embed/${room.videoId}?autoplay=1&mute=1&loop=1&playlist=${room.videoId}&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0&vq=hd720`;
-  iframe.style.width = '960px';
-  iframe.style.height = '540px';
-  iframe.style.border = 'none';
-  iframe.style.pointerEvents = 'none';
-  iframe.allow = 'autoplay; encrypted-media';
-
-  /* Wrap in a container div with a shield */
-  const container = document.createElement('div');
-  container.style.width = '960px';
-  container.style.height = '540px';
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.appendChild(iframe);
-
-  /* Shield to block interaction */
-  const shield = document.createElement('div');
-  shield.style.position = 'absolute';
-  shield.style.inset = '0';
-  shield.style.zIndex = '1';
-  container.appendChild(shield);
-
-  /* Create CSS3DObject */
-  const cssObject = new THREE.CSS3DObject(container);
-  /* Scale: 960px iframe → 19.2 three.js units (1px = 0.02 units) */
-  cssObject.position.set(0, screenY, z - 29.9);
-  cssObject.scale.set(0.02, 0.02, 0.02);
-  cssScene.add(cssObject);
-
-  /* Occluder mesh in WebGL scene — writes to depth buffer only, */
-  /* so WebGL geometry in front of it occludes the CSS3D content, */
-  /* but where there's nothing in front, the CSS3D (video) shows through. */
-  const occluderMat = new THREE.MeshBasicMaterial({
-    color: 0x000000,
-    colorWrite: false,
-    side: THREE.DoubleSide
-  });
-  const occluder = new THREE.Mesh(new THREE.PlaneGeometry(screenW, screenH), occluderMat);
-  occluder.position.set(0, screenY, z - 29.9);
-  scene.add(occluder);
-}
-
-/* Glowing wireframe orb for rooms without video */
-function buildGlowOrb(room, z) {
-  const geo = new THREE.IcosahedronGeometry(3, 1);
-  const mat = new THREE.MeshBasicMaterial({
-    color: room.spotColor,
-    wireframe: true,
-    transparent: true,
-    opacity: 0.2
-  });
-  const orb = new THREE.Mesh(geo, mat);
-  orb.position.set(8, 6, z - 15);
-  orb.userData.isOrb = true;
-  orb.userData.baseY = 6;
-  scene.add(orb);
-
-  /* Inner solid glow */
-  const innerGeo = new THREE.IcosahedronGeometry(1.5, 2);
-  const innerMat = new THREE.MeshBasicMaterial({
-    color: room.spotColor,
-    transparent: true,
-    opacity: 0.08
-  });
-  const inner = new THREE.Mesh(innerGeo, innerMat);
+  const inner = new THREE.Mesh(
+    new THREE.IcosahedronGeometry(1, 2),
+    new THREE.MeshBasicMaterial({ color: r.spotColor, transparent: true, opacity: 0.05 })
+  );
   inner.position.copy(orb.position);
-  inner.userData.isOrb = true;
-  inner.userData.baseY = 6;
-  scene.add(inner);
+  inner.userData = { orb: true, baseY: 5 };
+  glScene.add(inner);
 }
 
-/* ════════════════════════════
+/* ═══════════════════════════════════
+   CSS3D CONTENT (videos + panels)
+   ═══════════════════════════════════ */
+function addCSS3DContent() {
+  ROOMS.forEach((r, i) => {
+    const cz = -i * ROOM_SPACING;
+    const bz = cz - 14;
+    const els = [];
+
+    /* VIDEO SCREEN */
+    if (r.videoId) {
+      const screenEl = makeVideoScreen(r);
+      const screenObj = new THREE.CSS3DObject(screenEl);
+      screenObj.position.set(0, 5.5, bz + 0.1);
+      screenObj.scale.set(SCALE, SCALE, SCALE);
+      cssScene.add(screenObj);
+      els.push(screenEl);
+
+      /* Depth-only occluder so WebGL geometry in front hides the video */
+      const occMat = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide });
+      const occ = new THREE.Mesh(new THREE.PlaneGeometry(SCREEN_3D[0], SCREEN_3D[1]), occMat);
+      occ.position.set(0, 5.5, bz + 0.1);
+      glScene.add(occ);
+    }
+
+    /* INFO PANEL */
+    const infoEl = makeInfoPanel(r);
+    const infoObj = new THREE.CSS3DObject(infoEl);
+    infoObj.position.set(-7, 5.5, cz - 3);
+    infoObj.rotation.y = 0.06;
+    infoObj.scale.set(SCALE, SCALE, SCALE);
+    cssScene.add(infoObj);
+    els.push(infoEl);
+
+    /* ARCHITECTURE CARD */
+    const archEl = makeArchPanel(r);
+    const archObj = new THREE.CSS3DObject(archEl);
+    archObj.position.set(r.videoId ? 7 : 6, 3, cz - 5.5);
+    archObj.rotation.y = -0.08;
+    archObj.scale.set(SCALE, SCALE, SCALE);
+    cssScene.add(archObj);
+    els.push(archEl);
+
+    roomElements.push(els);
+  });
+}
+
+function makeVideoScreen(r) {
+  const wrap = document.createElement('div');
+  wrap.className = 'css3d-el';
+  wrap.style.cssText = `width:${SCREEN_PX[0]}px;height:${SCREEN_PX[1]}px;position:relative;overflow:hidden;background:#000;border-radius:4px;`;
+
+  const iframe = document.createElement('iframe');
+  iframe.src = 'https://www.youtube.com/embed/' + r.videoId +
+    '?autoplay=1&mute=1&loop=1&playlist=' + r.videoId +
+    '&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1';
+  iframe.allow = 'autoplay; encrypted-media';
+  iframe.loading = 'lazy';
+  iframe.style.cssText = 'width:100%;height:100%;border:none;pointer-events:none;';
+  wrap.appendChild(iframe);
+
+  const shield = document.createElement('div');
+  shield.style.cssText = 'position:absolute;inset:0;z-index:1;';
+  wrap.appendChild(shield);
+
+  return wrap;
+}
+
+function makeInfoPanel(r) {
+  const el = document.createElement('div');
+  el.className = 'info-panel css3d-el';
+  el.style.setProperty('--accent', r.accentGrad);
+
+  const chips = r.stack.map(s => '<span class="ip-chip">' + s + '</span>').join('');
+  const links = r.links.map(l =>
+    '<a href="' + l.url + '" target="_blank" rel="noopener" class="ip-link' +
+    (l.primary ? ' ip-link--primary' : '') + '">' + l.text + '</a>'
+  ).join('');
+
+  el.innerHTML =
+    '<div class="ip-tag">' + r.tag + '</div>' +
+    '<h1 class="ip-title" style="--accent:' + r.accentGrad + '">' + r.titleHTML + '</h1>' +
+    '<p class="ip-desc">' + r.desc + '</p>' +
+    '<div class="ip-stack">' + chips + '</div>' +
+    '<div class="ip-links">' + links + '</div>';
+
+  return el;
+}
+
+function makeArchPanel(r) {
+  const el = document.createElement('div');
+  el.className = 'arch-panel css3d-el';
+  el.innerHTML = '<div class="ap-header">Architecture</div>' + r.archHTML;
+  return el;
+}
+
+/* ═══════════════════════════════════
    DUST PARTICLES
-   ════════════════════════════ */
-function buildDust() {
-  const count = 2500;
+   ═══════════════════════════════════ */
+function addDust() {
+  const N = 2000;
   dustGeo = new THREE.BufferGeometry();
-  const positions = new Float32Array(count * 3);
-  const colors = new Float32Array(count * 3);
-  const sizes = new Float32Array(count);
+  const pos = new Float32Array(N * 3);
+  const col = new Float32Array(N * 3);
+  const span = ROOM_COUNT * ROOM_SPACING + 20;
+  const c = ROOMS[0].particleRGB;
 
-  const totalDepth = ROOM_COUNT * ROOM_SPACING;
-  const baseColor = ROOMS[0].particleColor;
-
-  for (let i = 0; i < count; i++) {
-    positions[i * 3] = (Math.random() - 0.5) * 40;
-    positions[i * 3 + 1] = Math.random() * 14;
-    positions[i * 3 + 2] = -Math.random() * totalDepth;
-    colors[i * 3] = baseColor.r;
-    colors[i * 3 + 1] = baseColor.g;
-    colors[i * 3 + 2] = baseColor.b;
-    sizes[i] = Math.random() * 2 + 0.5;
+  for (let i = 0; i < N; i++) {
+    pos[i * 3] = (Math.random() - 0.5) * 26;
+    pos[i * 3 + 1] = Math.random() * 10;
+    pos[i * 3 + 2] = 12 - Math.random() * span;
+    col[i * 3] = c[0];
+    col[i * 3 + 1] = c[1];
+    col[i * 3 + 2] = c[2];
   }
 
-  dustGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  dustGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-  dustGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+  dustGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  dustGeo.setAttribute('color', new THREE.BufferAttribute(col, 3));
 
-  const dustMat = new THREE.PointsMaterial({
-    size: 0.15,
+  const pts = new THREE.Points(dustGeo, new THREE.PointsMaterial({
+    size: 0.1,
     vertexColors: true,
     transparent: true,
-    opacity: 0.35,
+    opacity: 0.4,
     blending: THREE.AdditiveBlending,
     depthWrite: false
-  });
-
-  dustParticles = new THREE.Points(dustGeo, dustMat);
-  scene.add(dustParticles);
+  }));
+  glScene.add(pts);
 }
 
-function updateDustColors(roomIndex) {
-  const target = ROOMS[roomIndex].particleColor;
-  const colorsAttr = dustGeo.attributes.color;
-  const count = colorsAttr.count;
-  for (let i = 0; i < count; i++) {
-    const cz = dustGeo.attributes.position.getZ(i);
-    const roomZ = -roomIndex * ROOM_SPACING;
-    const dist = Math.abs(cz - roomZ);
-    if (dist < ROOM_SPACING * 0.7) {
-      colorsAttr.setXYZ(i, target.r, target.g, target.b);
+function tintDust(idx) {
+  const c = ROOMS[idx].particleRGB;
+  const ca = dustGeo.attributes.color;
+  const pa = dustGeo.attributes.position;
+  const rz = -idx * ROOM_SPACING;
+  for (let i = 0; i < ca.count; i++) {
+    if (Math.abs(pa.getZ(i) - rz) < ROOM_SPACING * 0.6) {
+      ca.setXYZ(i, c[0], c[1], c[2]);
     }
   }
-  colorsAttr.needsUpdate = true;
+  ca.needsUpdate = true;
 }
 
-/* ════════════════════════════
+/* ═══════════════════════════════════
    NAVIGATION
-   ════════════════════════════ */
-function buildNav() {
+   ═══════════════════════════════════ */
+function addNav() {
   ROOMS.forEach((_, i) => {
-    const dot = document.createElement('div');
-    dot.className = 'nav-dot';
-    dot.addEventListener('click', () => goToRoom(i));
-    navDots.appendChild(dot);
+    const d = document.createElement('div');
+    d.className = 'nav-dot';
+    d.addEventListener('click', () => goTo(i));
+    dots.appendChild(d);
   });
-
-  navPrev.addEventListener('click', () => goToRoom(currentRoom - 1));
-  navNext.addEventListener('click', () => goToRoom(currentRoom + 1));
+  btnPrev.addEventListener('click', () => goTo(currentRoom - 1));
+  btnNext.addEventListener('click', () => goTo(currentRoom + 1));
 }
 
-function goToRoom(index) {
-  if (isTransitioning || index < 0 || index >= ROOM_COUNT || index === currentRoom) return;
-  isTransitioning = true;
-
-  /* Flash */
+function goTo(idx) {
+  if (transitioning || idx < 0 || idx >= ROOM_COUNT || idx === currentRoom) return;
+  transitioning = true;
+  flash.style.background = ROOMS[idx].flashColor;
   flash.classList.remove('flash');
   void flash.offsetWidth;
   flash.classList.add('flash');
-
-  /* Slight delay so flash covers the cut */
   setTimeout(() => {
-    setActiveRoom(index, true);
-    isTransitioning = false;
-  }, 120);
+    setRoom(idx, true);
+    transitioning = false;
+  }, 100);
 }
 
-function setActiveRoom(index, animated) {
-  currentRoom = index;
-  const targetZ = -index * ROOM_SPACING + 18;
+function setRoom(idx, animated) {
+  currentRoom = idx;
+  const tz = -idx * ROOM_SPACING + 10;
+  if (animated) { camTargetZ = tz; } else { camera.position.z = tz; }
 
-  if (animated) {
-    animateCamera(targetZ);
-  } else {
-    camera.position.z = targetZ;
-  }
-
-  /* Update overlay panels */
-  roomInfos.forEach((el) => {
-    const r = parseInt(el.dataset.room, 10);
-    el.classList.toggle('active', r === index);
+  /* Fade CSS3D panels */
+  roomElements.forEach((els, i) => {
+    const vis = i === idx;
+    els.forEach(el => { el.style.opacity = vis ? '1' : '0'; });
   });
 
-  /* Dots */
-  const dots = navDots.querySelectorAll('.nav-dot');
-  dots.forEach((d, i) => d.classList.toggle('active', i === index));
+  /* UI */
+  dots.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+  btnPrev.disabled = idx === 0;
+  btnNext.disabled = idx === ROOM_COUNT - 1;
+  label.textContent = ROOMS[idx].name;
 
-  /* Arrows */
-  navPrev.disabled = index === 0;
-  navNext.disabled = index === ROOM_COUNT - 1;
-
-  /* Label */
-  roomLabel.textContent = ROOMS[index].name;
-
-  /* Fog */
-  scene.fog.color.set(ROOMS[index].fog);
-
-  /* Dust */
-  updateDustColors(index);
-}
-
-/* Smooth camera slide */
-let cameraTarget = null;
-function animateCamera(targetZ) {
-  cameraTarget = targetZ;
+  /* Scene mood */
+  glScene.fog.color.set(ROOMS[idx].fog);
+  tintDust(idx);
 }
 
 function onKey(e) {
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goToRoom(currentRoom + 1);
-  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goToRoom(currentRoom - 1);
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(currentRoom + 1);
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(currentRoom - 1);
 }
 
 function onResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  camera.aspect = w / h;
   camera.updateProjectionMatrix();
-  webglRenderer.setSize(window.innerWidth, window.innerHeight);
-  cssRenderer.setSize(window.innerWidth, window.innerHeight);
+  glRenderer.setSize(w, h);
+  cssRenderer.setSize(w, h);
 }
 
-/* ════════════════════════════
+/* ═══════════════════════════════════
    ANIMATION LOOP
-   ════════════════════════════ */
-function animate() {
-  requestAnimationFrame(animate);
-  const elapsed = clock.getElapsedTime();
+   ═══════════════════════════════════ */
+function tick() {
+  requestAnimationFrame(tick);
+  const t = clock.getElapsedTime();
 
   /* Camera lerp */
-  if (cameraTarget !== null) {
-    camera.position.z += (cameraTarget - camera.position.z) * 0.06;
-    if (Math.abs(cameraTarget - camera.position.z) < 0.05) {
-      camera.position.z = cameraTarget;
-      cameraTarget = null;
+  if (camTargetZ !== null) {
+    camera.position.z += (camTargetZ - camera.position.z) * 0.06;
+    if (Math.abs(camTargetZ - camera.position.z) < 0.03) {
+      camera.position.z = camTargetZ;
+      camTargetZ = null;
     }
   }
 
-  /* Gentle camera sway */
-  camera.position.x = Math.sin(elapsed * 0.15) * 0.4;
-  camera.position.y = 4 + Math.sin(elapsed * 0.2) * 0.2;
+  /* Gentle sway */
+  camera.position.x = Math.sin(t * 0.12) * 0.2;
+  camera.position.y = 4.5 + Math.sin(t * 0.18) * 0.1;
+  camera.lookAt(camera.position.x, 3.8, camera.position.z - 12);
 
-  /* Animate dust */
-  if (dustParticles) {
-    const pos = dustGeo.attributes.position;
-    for (let i = 0; i < pos.count; i++) {
-      let y = pos.getY(i);
-      y += Math.sin(elapsed + i) * 0.003;
-      if (y > 14) y = 0;
-      if (y < 0) y = 14;
-      pos.setY(i, y);
+  /* Dust drift */
+  if (dustGeo) {
+    const pa = dustGeo.attributes.position;
+    for (let i = 0; i < pa.count; i++) {
+      let y = pa.getY(i);
+      y += Math.sin(t * 0.4 + i * 0.07) * 0.002;
+      if (y > 10) y = 0.5;
+      if (y < 0) y = 10;
+      pa.setY(i, y);
     }
-    pos.needsUpdate = true;
-    dustParticles.rotation.y = elapsed * 0.01;
+    pa.needsUpdate = true;
   }
 
-  /* Animate orbs */
-  scene.traverse((obj) => {
-    if (obj.userData.isOrb) {
-      obj.rotation.x = elapsed * 0.3;
-      obj.rotation.y = elapsed * 0.2;
-      obj.position.y = obj.userData.baseY + Math.sin(elapsed * 0.5) * 0.5;
+  /* Orbs */
+  glScene.traverse(o => {
+    if (o.userData.orb) {
+      o.rotation.x = t * 0.22;
+      o.rotation.y = t * 0.15;
+      o.position.y = o.userData.baseY + Math.sin(t * 0.35) * 0.35;
     }
   });
 
-  /* Render both layers */
-  webglRenderer.render(scene, camera);
+  /* Render */
+  glRenderer.render(glScene, camera);
   cssRenderer.render(cssScene, camera);
 }
 
-/* ── GO ── */
+/* ── Go ── */
 init();
