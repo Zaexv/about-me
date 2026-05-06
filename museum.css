@@ -142,6 +142,7 @@ html,body{
 .grad-cosmic{background-image:linear-gradient(135deg,#818cf8,#38bdf8,#c084fc)}
 .grad-neural{background-image:linear-gradient(135deg,#4ade80,#22c55e,#34d399)}
 .grad-urban{background-image:linear-gradient(135deg,#c084fc,#a855f7,#ec4899)}
+.grad-steel{background-image:linear-gradient(135deg,#94a3b8,#64748b,#475569)}
 
 /* ── Description ── */
 .r-desc{

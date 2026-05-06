@@ -18,7 +18,8 @@ const ROOMS = [
   { name: 'World of Promptcraft',  color: [0.98, 0.57, 0.24], fog: 0x0a0500, light: 0xff6622, flash: 'rgba(251,146,60,0.2)' },
   { name: 'SpAIce — Space Odyssey', color: [0.39, 0.40, 0.95], fog: 0x02020c, light: 0x6366f1, flash: 'rgba(99,102,241,0.2)' },
   { name: 'AI Digital Twin',       color: [0.29, 0.77, 0.37], fog: 0x010805, light: 0x22c55e, flash: 'rgba(34,197,94,0.2)' },
-  { name: 'PlanItNow',             color: [0.66, 0.33, 0.97], fog: 0x080210, light: 0xa855f7, flash: 'rgba(168,85,247,0.2)' }
+  { name: 'PlanItNow',             color: [0.66, 0.33, 0.97], fog: 0x080210, light: 0xa855f7, flash: 'rgba(168,85,247,0.2)' },
+  { name: 'Boring MCP',            color: [0.45, 0.55, 0.60], fog: 0x040608, light: 0x64748b, flash: 'rgba(100,116,139,0.2)' }
 ];
 
 const SPACING = 30;
